@@ -1,3 +1,3 @@
 # flight-volunteer
 
-Web-App that lists the numerous dogs which looking for volunteers to bring them to new pawrents. 
+Web-App that lists the numerous dogs which are looking for volunteers to bring them to new pawrents. 
