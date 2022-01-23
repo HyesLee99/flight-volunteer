@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap');
+
+a {
+    text-decoration: none;
+}
+
+#hero h1 { 
+    color: White;
+    outline: black;
+    position: relative;
+    font-size: 5rem;
+    width: fit-content;
+    /*-webkit-text-stroke: 1px #bdd992;*/
+
+}
+
+* {
+    padding:0;
+    margin:0;
+    box-sizing:border-box;
+}
+
+html {
+    font-size: 10px;
+    font-family: 'Mochiy Pop P One', sans-serif;
+}
+
+.container {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#page1 {
+    display:flex;
+    justify-content: flex-end;
+    padding: 10%;
+}
+
+
+#hero {
+    background-image: url(./img/Jinddu.jpg);
+    background-size: 40% 100%;
+    background-position: top left;
+    background-repeat: no-repeat;
+    position: relative; 
+}
+
+#hero::after {
+    content:'';
+    position: absolute;
+    right:0;
+    top: 0;
+    height: 100%;
+    width: 60%;
+    background-color: #ffc06e;
+    opacity:0.3;
+    z-index:-1;
+}
+#search {
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+
+}
+
+.button{
+    display: inline-block;
+    padding: 10px 20px;
+    color: #bdd992;
+    background-color: white;
+    border:2px solid #bdd992;
+    font-size: 2rem;
+    text-transform:uppercase;
+    letter-spacing: .1rem;
+    margin-top:30px;
+    width:max-content;
+    margin-left:35%;
+    transition: .3s ease background-color;
+    transition-property: background-color, color;
+}
+
+ .button:hover{
+    color: white;
+    background-color: #bdd992;
+}
+
+#flight-info{
+    display:flex;
+    justify-content:space-evenly;
+}
+
+#flight-info>div>label {
+    margin-bottom: 20px;
+}
+
+input {
+    margin-top:5px;
+    height: 30px;
+    width: 130px;
+}
+
