@@ -1,5 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap');
 
+* {
+    padding:0;
+    margin:0;
+    box-sizing:border-box;
+}
+
+:root {
+    --clr-darkGreen: #01A66F;
+    --clr-mintGreen: #75CE9F;
+    --clr-lightGreen: #BDD99E;
+    --clr-yellow: #FFC06E;
+}
+
+/*Beginning of hero page*/
 a {
     text-decoration: none;
 }
@@ -12,12 +26,6 @@ a {
     width: fit-content;
     /*-webkit-text-stroke: 1px #bdd992;*/
 
-}
-
-* {
-    padding:0;
-    margin:0;
-    box-sizing:border-box;
 }
 
 html {
@@ -82,10 +90,11 @@ html {
     transition-property: background-color, color;
 }
 
- .button:hover{
+.button:hover{
     color: white;
     background-color: #bdd992;
 }
+
 
 #flight-info{
     display:flex;
@@ -102,3 +111,99 @@ input {
     width: 130px;
 }
 
+/*End of hero page*/
+
+/*Beginning of Listing page*/
+
+#listing-page {
+    flex-direction: column;
+}
+
+.row {
+    display:flex;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    color: black;
+    background-image: url(./img/Jinddu.jpg);
+    background-repeat: no-repeat;
+    padding: 12.3rem 0 0;
+    max-width: 35ch;
+    height: 300px;
+    margin: 6px;
+    border-radius: 1rem;
+    transition: transform 500ms ease;
+    overflow:hidden;
+}
+
+.item:hover {
+    transform: scale(1.04);
+}
+
+#page-top{
+    text-align: center;
+    max-width:1500px;
+    margin: 0 auto;
+    padding: 100px 0;
+}
+
+.item>.discription {
+    --padding: 1.5rem;
+    padding: var(--padding);
+    background: linear-gradient(hsl(34 100% 99%/ 0) 10%, hsl(34 100% 71.6% / 0.7));
+    color: white;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    transform: translatey(73%);
+}
+
+.discription > *:not(.name) {
+    opacity: 0;
+    transition: opacity 500ms linear;
+    transition-delay: 500ms;
+}
+
+.item:hover .discription > *{
+    opacity: 1;
+}
+
+.name {
+    position: relative;
+    margin-bottom: 10px;
+    width: max-content;
+    padding-bottom: 2px;
+}
+
+.name::after {
+    content: "";
+    position:absolute;
+    height: 3px;
+    left:calc(var(--padding) * -1);
+    bottom:0;
+    background: var(--clr-yellow);
+    width: calc(100% + var(--padding));
+    transform: scalex(0);
+    transform-origin: left;
+    transition: transform 500ms ease;
+}
+
+.item:hover .name::after {
+    transform: scalex(1);
+}
+
+.item>.discription>.button {
+    color: var(--clr-yellow);
+    background-color: white;
+    border:2px solid var(--clr-yellow);
+    transition: .3s ease background-color;
+    transition-property: background-color, color;
+    font-size: 1rem;
+}
+
+.item:hover .discription {
+    transform: translateY(0);
+    transition: 500ms ease;
+    transition-delay: 500ms;
+}
