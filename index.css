@@ -41,6 +41,10 @@ html {
     justify-content: center;
 }
 
+.container:not(#page1) {
+    flex-direction: column;
+}
+
 #page1 {
     display:flex;
     justify-content: flex-end;
@@ -156,7 +160,7 @@ input {
     color: white;
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
-    transform: translatey(73%);
+    transform: translatey(13rem);
 }
 
 .discription > *:not(.name) {
@@ -203,7 +207,37 @@ input {
 }
 
 .item:hover .discription {
-    transform: translateY(0);
+    transform: translateY(calc(-1* 3.5rem));
     transition: 500ms ease;
     transition-delay: 500ms;
 }
+
+/*End of Listing page*/
+
+/*Other section format*/
+
+.section-title {
+    font-size:4rem;
+    font-weight: 300;
+    color: black;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: .2rem;
+    text-align:cetner;
+}
+
+p, ol {
+    font-size: 1.5rem;
+    font-weight: 0;
+    margin-left:10%;
+    margin-right: 10%;
+    margin-top: 30px;
+    
+}
+
+.fyi {
+    font-size: 10px;
+    position:0px;
+    color: grey;
+}
+
