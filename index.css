@@ -75,7 +75,6 @@ html {
     display:flex;
     flex-direction: column;
     justify-content:center;
-
 }
 
 .button{
@@ -121,6 +120,7 @@ input {
 
 #listing-page {
     flex-direction: column;
+    padding-bottom: 50px;
 }
 
 .row {
@@ -150,7 +150,7 @@ input {
     text-align: center;
     max-width:1500px;
     margin: 0 auto;
-    padding: 100px 0;
+    padding: 50px 0;
 }
 
 .item>.discription {
@@ -241,3 +241,18 @@ p, ol {
     color: grey;
 }
 
+#search>#flight-info>.button {
+    display: inline-block;
+    font-size: 1.5rem;
+    text-transform:uppercase;
+    letter-spacing: .1rem;
+    width:max-content;
+    margin-top: 18px; 
+    padding-top:5px;
+    margin-left:1%;
+    height:34px;
+}
+
+#search>#flight-info {
+    margin-bottom: 5px;
+}

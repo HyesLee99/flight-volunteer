@@ -4,6 +4,7 @@
 			<!--Image from https://m.blog.naver.com/rlaantjd8204/220715116442-->
 	    <title>Flight Volunteer</title>
 	    <link href="index.css" rel="stylesheet">
+		<script src="index.js"></script>
 		</head>
 		<body>
 			<!--Hearo section -->
@@ -21,13 +22,13 @@
 								<div id="from">
 									<label>From</label>
 									<div>
-										<input type="text">
+										<input type="text" id="departure">
 									</div>
 								</div>
-								<div id="to">
+								<div >
 									<label>To</label>
 									<div>
-										<input type="text">
+										<input type="text" id="to">
 									</div>
 								</div>
 								<div id="date">
@@ -38,20 +39,20 @@
 										min="2022-01-01" max="2023-01-01">
 									</div>
 								</div>
-								<div id="airline">
+								<div >
 									<label>Choose airline</label>
 									<div>
-										<input type="text">
+										<input type="text" id="airline">
 									</div>
 								</div>
 								
 							</div>
-							<a href="#" type="button" class="button"> search</a>
+							<a href="#" type="button" class="button" id="search-lists"> search</a>
 						</div>
 					</div>
 				</div>
 			</section>
-			<section>
+			<section id="section-explain">
 				<div id="purpose" class="container"> 
 					<h1 class="section-title">What is "Flight Volunteer"?</h1>
 					<p>
@@ -71,7 +72,7 @@
 				
 				</div>
 			</section>
-			<section>
+			<section id="section-process">
 				<div id="process" class="container"> 
 					<h1 class="section-title">How does it work?</h1>
 					<ol>
@@ -90,18 +91,49 @@
 					<p class="fyi">*The processure could be differ by the organization and airports </p>
 				</div>
 			</section>
-			<section>
+			<section id="section-contact">
 				<div id="contact" class="container">
 					<h1 class="section-title"> Contact us!</h1>
 					<div id="contact-info"></div>
 					<a href="#" type="button" class="button">Contact Us!</a>
 			</section>
 				
-			<section>
+			<section id="listings">
 				<div id="listing-page" class="container">
 					<div id="page-top">
 						<h1 class="section-title">I am ready to travel!</h1>
 						<p>These puppies are waiting to travel to your destination! If you would like to be flight volunteer for one of them, click the "contact" button! </p>
+					</div>
+					<div id="search">
+						<div id="flight-info"> 
+							<div id="from">
+								<label>From</label>
+								<div>
+									<input type="text" id="departure">
+								</div>
+							</div>
+							<div >
+								<label>To</label>
+								<div>
+									<input type="text" id="to">
+								</div>
+							</div>
+							<div id="date">
+								<label>Choose date</label>
+								<div>
+									<input type="date" id="depart" name="depart-date"
+									value="2022-01-01"
+									min="2022-01-01" max="2023-01-01">
+								</div>
+							</div>
+							<div >
+								<label>Choose airline</label>
+								<div>
+									<input type="text" id="airline">
+								</div>
+							</div>
+							<a href="#" type="button" class="button" id="search-lists"> search</a>
+						</div>
 					</div>
 					<div class=lists>
 						<div class="row">
