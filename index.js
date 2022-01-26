@@ -4,21 +4,37 @@
  * @returns 
  */
 
-// Instagram access token
-
+// Instagram access token:   IGQVJWV3NzZAF8yVDRGQ28wSUZAEa3V4TzM0NXBJdGRXYkJaWFEzMUhicHUxVlpjbFZATbGNlTF8xTjVXRnc4czl6OUJDSUViSVNtY0U3TnY0QThNY1JJOGcxcE0wSmlPNjcyLXQyS2JhU2poQW02RzhxOQZDZD
+const header = document.querySelector('.header.container');
 "use strict";
-
+   
 (function() {
     
+
     //const mobile_menu = qs('.header .nav-bar .nav-list ul');
-    //const header = qs('.header .container');
     window.addEventListener('load', init);
     
     function init() {
+        let header = qs('.header.container');
+        let menuItem = document.querySelectorAll('.header #nav-bar .nav-list ul li a h1');
         $("listings").style.display= "none";
         $("search-lists").addEventListener("click", search);
         let hamburger = qs('.hamburger');
         hamburger.addEventListener("click", hamburgerClick);
+        document.addEventListener('scroll', ()=>{
+            let scroll_position = window.scrollY;
+            if(scroll_position > 250){
+                header.style.backgroundColor =  "#FFC06E";
+
+            } else {
+                header.style.backgroundColor = "transparent" ;
+            }
+
+        })
+        console.log(menuItem);
+        menuItem.forEach((item)=>{
+            item.addEventListener("click", hamburgerClick);
+        })
     }
 
     function search() {
