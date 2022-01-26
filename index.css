@@ -443,3 +443,55 @@ p, ol {
     }
 }
 
+/*Contact section */
+
+#contact-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 35px;
+}
+
+.contact-input {
+    display:flex;
+}
+
+.contact-input h2 {
+    width: 150px;
+    text-align: center;
+}
+
+#message h2 {
+    width: 300px;
+    text-align: center;
+}
+
+#message input {
+    width: 300px;
+    height: 400px;
+    text-align:auto;
+}
+
+#contact {
+    width: 100%;
+}
+
+#contact-info{
+    margin-top: 25px;
+} 
+
+#button-container {
+    width: 100%;
+    display: flex;
+
+}
+
+#button-container a {
+    position:relative;
+    margin-left:auto;
+    margin-right:auto;
+    
+
+    
+}

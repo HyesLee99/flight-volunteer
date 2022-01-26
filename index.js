@@ -4,6 +4,7 @@
  * @returns 
  */
 
+//https://www.youtube.com/watch?v=euAWvO_es6s
 // Instagram access token:   IGQVJWV3NzZAF8yVDRGQ28wSUZAEa3V4TzM0NXBJdGRXYkJaWFEzMUhicHUxVlpjbFZATbGNlTF8xTjVXRnc4czl6OUJDSUViSVNtY0U3TnY0QThNY1JJOGcxcE0wSmlPNjcyLXQyS2JhU2poQW02RzhxOQZDZD
 const header = document.querySelector('.header.container');
 "use strict";
@@ -16,7 +17,7 @@ const header = document.querySelector('.header.container');
     
     function init() {
         let header = qs('.header.container');
-        let menuItem = document.querySelectorAll('.header #nav-bar .nav-list ul li a h1');
+        let menuItem = qsa('.header #nav-bar .nav-list ul li a h1');
         $("listings").style.display= "none";
         $("search-lists").addEventListener("click", search);
         let hamburger = qs('.hamburger');
@@ -29,9 +30,9 @@ const header = document.querySelector('.header.container');
             } else {
                 header.style.backgroundColor = "transparent" ;
             }
-
         })
-        console.log(menuItem);
+        $("send-button").addEventListener("click", send);
+
         menuItem.forEach((item)=>{
             item.addEventListener("click", hamburgerClick);
         })
@@ -76,6 +77,21 @@ const header = document.querySelector('.header.container');
         $("section-process").style.display="block";
         $("hero").style.display="block"; // why this is only block? 
     }
+
+    function send() {
+        let contactInfo = qsa('.contact-input input');
+        let message = $("message-input").value;
+        let name = contactInfo[0].value;
+        let emailAdd = contactInfo[1].value;
+        let number = contactInfo[2].value; 
+        // use ajax? to send the email 
+        alert("Sent!");
+        for (let i= 0; i < contactInfo.length; i++) {
+            contactInfo[i].value = "";
+        }
+        $("message-input").value = "";
+    }
+
 
     //example:  element.addEventListener("click", function );
 
