@@ -3,6 +3,9 @@
  * @param {*} name 
  * @returns 
  */
+
+// Instagram access token
+
 "use strict";
 
 (function() {

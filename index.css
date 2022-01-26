@@ -340,7 +340,10 @@ p, ol {
     justify-content: center;
     z-index: 100;
     cursor: pointer;
+    transform: scale(0.7);
+    margin-right: 20px;
 }
+
 
 #header .hamburger .bar::after, 
 #header .hamburger .bar::before{
@@ -381,5 +384,36 @@ p, ol {
 
 #header .nav-list ul.active {
     left:0;
+}
+
+@media only screen and (min-width: 1200px) {
+    #header .hamburger {
+        display: none;
+    }
+    
+    #header .nav-list ul {
+        position: initial;
+        display: block;
+        height: auto;
+        width: fit-content;
+        background-color: transparent;
+    }
+
+    #header .nav-list ul li {
+        display: inline-block;
+    }
+
+    #header .nav-list ul li a {
+        font-size:1.5rem;
+    }
+
+    #header .nav-list ul a:after {
+        display: none;
+    }
+
+    #service .service-bottom .service-item {
+        flex-basis: 22%;
+        margin: 1.5%;
+    }
 }
 
