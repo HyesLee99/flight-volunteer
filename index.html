@@ -121,10 +121,18 @@
 			</section>
 			<section id="section-contact">
 				<div id="contact" class="container">
-					<form onsubmit="sendEmail(); return false;">
-						<h1 class="section-title"> Contact us!</h1>
+					<!--<form  onsubmit="sendEmail(); return false;">-->
+						<h1 class="section-title" id="contact-us"> Contact us!</h1>
 						<div id="contact-container">
 							<div id="contact-info">
+								<form method="post" action="contact.php">
+									<input type=text placeholder="name"> 
+									<input type=text placeholder="email"> 
+									<input type=text placeholder="phone number"> 
+									<input type=text placeholder="message">
+									<textarea name="message" class="form-control" placeholder="message" row="4" required></textarea>
+									<input type="submit" value="SendMessage">
+								</form>
 								<div class="contact-input"><h2>Name:</h2><input type=text> </div> 
 								<div class="contact-input"><h2>Email Address:</h2><input type=text> </div> 
 								<div class="contact-input"><h2>Phone number:</h2><input type=text> </div> 

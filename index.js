@@ -91,20 +91,21 @@ const header = document.querySelector('.header.container');
         for (let i= 0; i < contactInfo.length; i++) {
             contactInfo[i].value = "";
         }
-        $("message-input").value = "";
-
+        // $("message-input").value = "";
+//iommoyehnqhbjnhy
         // code to send email. 
-        Email.send({
-            Host : "smtp.gmail.com",
-            Username : "devtesting0126@gmail.com",
-            Password : "devtesting1111!",
-            To : "devtesting0126@gmail.com",
-            From : emailAdd,
-            Subject : "Test email",
-            Body : message
-        }).then(
-            message => alert(message)
-        );
+        // Email.send({
+        //     //secureToken: "c06710eb-be8a-4980-a13a-1fc767cf0bd3",
+        //     Host : "smtp.gmail.com", // need to find another smtp
+        //     Username : "devtesting0126@gmail.com",
+        //     Password : "devtesting1111!",
+        //     To : "devtesting0126@gmail.com",
+        //     From : emailAdd,
+        //     Subject : "Test email",
+        //     Body : message
+        // }).then(
+        //     message => alert(message)
+        // );
     }
 
 
