@@ -5,6 +5,7 @@
 	    <title>Flight Volunteer</title>
 	    <link href="index.css" rel="stylesheet">
 		<script src="index.js"></script>
+		<script src="https://smtpjs.com/v3/smtp.js"></script>
 		</head>
 		<body>
 			<!--Header section-->
@@ -120,18 +121,20 @@
 			</section>
 			<section id="section-contact">
 				<div id="contact" class="container">
-					<h1 class="section-title"> Contact us!</h1>
-					<div id="contact-container">
-						<div id="contact-info">
-							<div class="contact-input"><h2>Name:</h2><input type=text> </div> 
-							<div class="contact-input"><h2>Email Address:</h2><input type=text> </div> 
-							<div class="contact-input"><h2>Phone number:</h2><input type=text> </div> 
+					<form onsubmit="sendEmail(); return false;">
+						<h1 class="section-title"> Contact us!</h1>
+						<div id="contact-container">
+							<div id="contact-info">
+								<div class="contact-input"><h2>Name:</h2><input type=text> </div> 
+								<div class="contact-input"><h2>Email Address:</h2><input type=text> </div> 
+								<div class="contact-input"><h2>Phone number:</h2><input type=text> </div> 
+							</div>
+							<div id="message"><h2>Message</h2> <input type=text id="message-input">  </div>
 						</div>
-						<div id="message"><h2>Message</h2> <input type=text id="message-input">  </div>
-					</div>
-					<div id="button-container">
-						<a type="button" id="send-button" class="button">Send!</a>
-					</div>
+						<div id="button-container">
+							<a type="submit" id="send-button" class="button">Send!</a>
+						</div>
+					</form>
 				</div>
 			</section>
 				

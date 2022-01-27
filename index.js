@@ -7,11 +7,13 @@
 //https://www.youtube.com/watch?v=euAWvO_es6s
 // Instagram access token:   IGQVJWV3NzZAF8yVDRGQ28wSUZAEa3V4TzM0NXBJdGRXYkJaWFEzMUhicHUxVlpjbFZATbGNlTF8xTjVXRnc4czl6OUJDSUViSVNtY0U3TnY0QThNY1JJOGcxcE0wSmlPNjcyLXQyS2JhU2poQW02RzhxOQZDZD
 const header = document.querySelector('.header.container');
+
+
+
 "use strict";
    
 (function() {
-    
-
+    const myEmail = "";
     //const mobile_menu = qs('.header .nav-bar .nav-list ul');
     window.addEventListener('load', init);
     
@@ -31,7 +33,7 @@ const header = document.querySelector('.header.container');
                 header.style.backgroundColor = "transparent" ;
             }
         })
-        $("send-button").addEventListener("click", send);
+        $("send-button").addEventListener("click", sendEmail);
 
         menuItem.forEach((item)=>{
             item.addEventListener("click", hamburgerClick);
@@ -78,7 +80,7 @@ const header = document.querySelector('.header.container');
         $("hero").style.display="block"; // why this is only block? 
     }
 
-    function send() {
+    function sendEmail() {
         let contactInfo = qsa('.contact-input input');
         let message = $("message-input").value;
         let name = contactInfo[0].value;
@@ -90,6 +92,19 @@ const header = document.querySelector('.header.container');
             contactInfo[i].value = "";
         }
         $("message-input").value = "";
+
+        // code to send email. 
+        Email.send({
+            Host : "smtp.gmail.com",
+            Username : "devtesting0126@gmail.com",
+            Password : "devtesting1111!",
+            To : "devtesting0126@gmail.com",
+            From : emailAdd,
+            Subject : "Test email",
+            Body : message
+        }).then(
+            message => alert(message)
+        );
     }
 
 
@@ -107,10 +122,6 @@ const header = document.querySelector('.header.container');
 
     function qsa(name) {
         return document.querySelectorAll(name);
-    }
-
-    function eraseAll() {
-
     }
 
     function eraseAll(arr) {
