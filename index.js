@@ -8,8 +8,6 @@
 // Instagram access token:   IGQVJWV3NzZAF8yVDRGQ28wSUZAEa3V4TzM0NXBJdGRXYkJaWFEzMUhicHUxVlpjbFZATbGNlTF8xTjVXRnc4czl6OUJDSUViSVNtY0U3TnY0QThNY1JJOGcxcE0wSmlPNjcyLXQyS2JhU2poQW02RzhxOQZDZD
 const header = document.querySelector('.header.container');
 
-
-
 "use strict";
    
 (function() {
@@ -26,7 +24,7 @@ const header = document.querySelector('.header.container');
         hamburger.addEventListener("click", hamburgerClick);
         document.addEventListener('scroll', ()=>{
             let scroll_position = window.scrollY;
-            if(scroll_position > 250){
+            if(scroll_position > 10){
                 header.style.backgroundColor =  "#FFC06E";
 
             } else {
@@ -68,11 +66,12 @@ const header = document.querySelector('.header.container');
     }
 
     function hamburgerClick() {
-        this.classList.toggle('active');
+        qs('.hamburger').classList.toggle('active');
         qs(".nav-list ul").classList.toggle('active');
     }
 
     function showHomePage() {
+        qs('.hamburger').classList.toggle('active');
         $("listings").style.display="none";
         $("section-explain").style.display="block";
         $("section-contact").style.display="block";
@@ -136,3 +135,22 @@ const header = document.querySelector('.header.container');
 
 
 
+// function checkStatus(response) {    // boiler plate code given out
+//     ...
+//   }
+  
+//   function callAjax() {
+//     let url = ..... // put url string here
+//     fetch(url)
+//          .then(checkStatus)
+//          .then(handleResponse)
+//          .catch(handleError);
+//   }
+  
+//   function handleResponse(responseText){
+//     //success: do something with the responseText
+//   }
+  
+//   function handleError(error){
+//     //error: do something with error
+//   }
