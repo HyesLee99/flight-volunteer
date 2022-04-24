@@ -19,7 +19,8 @@ const header = document.querySelector('.header.container');
         let header = qs('.header.container');
         let menuItem = qsa('.header #nav-bar .nav-list ul li a h1');
         $("listings").style.display= "none";
-        $("search-lists").addEventListener("click", search);
+        $("search-list-1").addEventListener("click", search);
+        $("search-list-2").addEventListener("click", search);
         let hamburger = qs('.hamburger');
         hamburger.addEventListener("click", hamburgerClick);
         document.addEventListener('scroll', ()=>{
@@ -40,11 +41,33 @@ const header = document.querySelector('.header.container');
 
     // fetch the search result and list them on the page
     function search() {
-        let from = $("departure").value;
-        let to =  $("to").value;
-        let date = $("depart").value;
-        let airline = $("airline").value;
-        
+        let from = "";
+        let to = "";
+        let date = "";
+        let airline = "";
+        if (this.id == "search-list-1") {
+            from = $("departure-1").value;
+            to =  $("to-1").value;
+            date = $("depart-1").value;
+            airline = $("airline-1").value;
+            $("departure-2").value = from;
+            $("to-2").value = to;
+            $("depart-2").value = date;
+            $("airline-2").value = airline;
+            $("departure-1").value = "";
+            $("to-1").value = "";
+            $("depart-1").value = "";
+            $("airline-1").value = "";
+        } else {
+            from = $("departure-2").value;
+            to =  $("to-2").value;
+            date = $("depart-2").value;
+            airline = $("airline-2").value;
+        }
+        if (from == "" || to == "" || date == "") {
+            alert("Please enter departure, destination, and date.");
+            return "";
+        }
         // change the page 
         $("listings").style.display="inline";
         $("section-explain").style.display="none";
@@ -53,10 +76,7 @@ const header = document.querySelector('.header.container');
         $("hero").style.display="none";
 
         // erase the search 
-        $("departure").value = "";
-        $("to").value = "";
-        $("depart").value = "";
-        $("airline").value = "";
+
         
         // eventListener when clicked title, or any nav bars
         qs(".brand").addEventListener("click",showHomePage);
@@ -64,16 +84,18 @@ const header = document.querySelector('.header.container');
         $("nav-about").addEventListener("click",showHomePage);
         $("nav-proc").addEventListener("click",showHomePage);
         $("nav-contact").addEventListener("click",showHomePage);
-        fetchSearch(from,to,date,airline);
+        let rows = qsa(".item");
+        eraseAll(rows);
         
+        fetchSearch(from,to,date,airline);
     }
 
     function fetchSearch(from, to, date, airline) {
         let url = "search.php?from=" +from + "&to=" + to 
                     + "&date=" + date + "&airline=" + airline;   // put url string here
-        console.log(url);
-        fetch(url)
+        fetch(url, {mode:"cors"})
                 .then(checkStatus)
+                .then(JSON.parse)
                 .then(addItem)
                 .catch(console.log());
     }
@@ -119,23 +141,28 @@ const header = document.querySelector('.header.container');
         // );
     }
 
-    function addItem(name, info) {
-       let item = document.createElement("div");
-       let discription = document.createElement("div");
-       let nameDom = document.createElement("h2");
-       let p = document.createElement("p"); 
-       let a = document.createElement("a");
-       nameDom.innerText = name;
-       p.innerText = info;
-       item.classList.add("item");
-       discription.classList.add("discription");
-       nameDom.classList.add("name");
-       discription.appendChild(nameDom);
-       discription.appendChild(p);
-       discription.appendChild(a);
-       item.appendChild(discription);
-       let row = lastRow();
-       row.appendChild(item);
+    function addItem(data) {
+        console.log(data);
+        for (let dog of data) {
+            let name = dog["name"];
+            let info = dog["comment"];
+            let item = document.createElement("div");
+            let discription = document.createElement("div");
+            let nameDom = document.createElement("h2");
+            let p = document.createElement("p"); 
+            let a = document.createElement("a");
+            nameDom.innerText = name;
+            p.innerText = info;
+            item.classList.add("item");
+            discription.classList.add("discription");
+            nameDom.classList.add("name");
+            discription.appendChild(nameDom);
+            discription.appendChild(p);
+            discription.appendChild(a);
+            item.appendChild(discription);
+            let row = lastRow();
+            row.appendChild(item);
+        }    
     }
 
     function lastRow() {

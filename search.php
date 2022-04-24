@@ -16,24 +16,31 @@
 
     // Select all the rows from the table
     try {
-        $rows = $db ->query("SELECT * FROM `doglist` WHERE departure = {$from}");
+        $rows = $db ->query("SELECT * FROM `doglist` WHERE departure = '".$from."'");
     } catch (PDOException $ex) {
         db_error_message("Can not query the database", $ex);
-        db_error_message("testing", $ex);
-        
     }
+
 
     header("Content-Type: application/json");
     $output = array();
     foreach($rows as $row) {
-        $item = array();
-        $item["name"] = $row["name"];
-        $item["departure"] = $row["departure"];
-        $item["destination"] = $row["destination"];
-        $item["date"] = $row["date"];
-        $item["airline"] = $row["airline"];
-        $item["comment"] = $row["info"];
-        array_push($output, $item);
+        $destination = $row["destination"];
+        $arr = explode(",", $destination);
+        foreach ($arr as $place) {
+            if ($place == $to) {
+                $item = array();
+                $item["name"] = $row["name"];
+                $item["departure"] = $row["departure"];
+                $item["destination"] = $row["destination"];
+                $item["date"] = $row["date"];
+                $item["airline"] = $row["airline"];
+                $item["comment"] = $row["info"];
+                array_push($output, $item);
+                break;
+            }
+        }
+        
     }
     print(json_encode($output));
 
