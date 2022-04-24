@@ -38,31 +38,44 @@ const header = document.querySelector('.header.container');
         })
     }
 
+    // fetch the search result and list them on the page
     function search() {
         let from = $("departure").value;
         let to =  $("to").value;
         let date = $("depart").value;
         let airline = $("airline").value;
-        console.log(from + " " + to + " " + date + " " + airline);
-        //get 
+        
+        // change the page 
         $("listings").style.display="inline";
         $("section-explain").style.display="none";
         $("section-contact").style.display="none";
         $("section-process").style.display="none";
         $("hero").style.display="none";
 
+        // erase the search 
         $("departure").value = "";
         $("to").value = "";
         $("depart").value = "";
-        $("airline").value ="";
+        $("airline").value = "";
         
         // eventListener when clicked title, or any nav bars
-
         qs(".brand").addEventListener("click",showHomePage);
         $("nav-home").addEventListener("click",showHomePage);
         $("nav-about").addEventListener("click",showHomePage);
         $("nav-proc").addEventListener("click",showHomePage);
         $("nav-contact").addEventListener("click",showHomePage);
+        fetchSearch(from,to,date,airline);
+        
+    }
+
+    function fetchSearch(from, to, date, airline) {
+        let url = "search.php?from=" +from + "&to=" + to 
+                    + "&date=" + date + "&airline=" + airline;   // put url string here
+        console.log(url);
+        fetch(url)
+                .then(checkStatus)
+                .then(addItem)
+                .catch(console.log());
     }
 
     function hamburgerClick() {
@@ -71,7 +84,6 @@ const header = document.querySelector('.header.container');
     }
 
     function showHomePage() {
-        qs('.hamburger').classList.toggle('active');
         $("listings").style.display="none";
         $("section-explain").style.display="block";
         $("section-contact").style.display="block";
@@ -107,7 +119,41 @@ const header = document.querySelector('.header.container');
         // );
     }
 
+    function addItem(name, info) {
+       let item = document.createElement("div");
+       let discription = document.createElement("div");
+       let nameDom = document.createElement("h2");
+       let p = document.createElement("p"); 
+       let a = document.createElement("a");
+       nameDom.innerText = name;
+       p.innerText = info;
+       item.classList.add("item");
+       discription.classList.add("discription");
+       nameDom.classList.add("name");
+       discription.appendChild(nameDom);
+       discription.appendChild(p);
+       discription.appendChild(a);
+       item.appendChild(discription);
+       let row = lastRow();
+       row.appendChild(item);
+    }
 
+    function lastRow() {
+        let items = qsa("#lastRow .item");
+        let count = items.length;
+        if (count < 3) {
+            console.log(count);
+            return $("lastRow");
+        } else {
+            console.log("no lastRow");
+            $("lastRow").removeAttribute("#lastRow");
+            let row = document.createElement("div");
+            row.classList.add("row");
+            row.setAttribute("id", "lastRow");
+            qs(".lists").appendChild(row);
+            return row;
+        }
+    }
     //example:  element.addEventListener("click", function );
 
     //Functions 
@@ -130,6 +176,20 @@ const header = document.querySelector('.header.container');
          }
     }
 
+      /*
+   * Helper function to return the response's result text if successful, otherwise
+   * returns the rejected Promise result with an error status and corresponding text
+   * @param {object} response - response to check for success/error
+   * @return {object} - valid result text if response was successful, otherwise rejected
+   *                    Promise result
+   */
+  function checkStatus(response) { 
+    if (response.status >= 200 && response.status < 300 || response.status == 0) {  
+      return response.text();
+    } else {  
+      return Promise.reject(new Error(response.status + ": " + response.statusText)); 
+    }
+  }
 })();
 
 
