@@ -54,10 +54,6 @@ const header = document.querySelector('.header.container');
             $("to-2").value = to;
             $("depart-2").value = date;
             $("airline-2").value = airline;
-            $("departure-1").value = "";
-            $("to-1").value = "";
-            $("depart-1").value = "";
-            $("airline-1").value = "";
         } else {
             from = $("departure-2").value;
             to =  $("to-2").value;
@@ -68,6 +64,10 @@ const header = document.querySelector('.header.container');
             alert("Please enter departure, destination, and date.");
             return "";
         }
+        $("departure-1").value = "";
+        $("to-1").value = "";
+        $("depart-1").value = "";
+        $("airline-1").value = "";
         // change the page 
         $("listings").style.display="inline";
         $("section-explain").style.display="none";
@@ -75,9 +75,6 @@ const header = document.querySelector('.header.container');
         $("section-process").style.display="none";
         $("hero").style.display="none";
 
-        // erase the search 
-
-        
         // eventListener when clicked title, or any nav bars
         qs(".brand").addEventListener("click",showHomePage);
         $("nav-home").addEventListener("click",showHomePage);
@@ -86,10 +83,18 @@ const header = document.querySelector('.header.container');
         $("nav-contact").addEventListener("click",showHomePage);
         let rows = qsa(".item");
         eraseAll(rows);
-        
+        console.log($("no-dogs") );
+        if ($("no-dogs") != null) {
+            $("no-dogs").parentElement.removeChild($("no-dogs"));
+        }
         fetchSearch(from,to,date,airline);
     }
 
+    // fetch the data according to travel info
+    // parameter @from: departure
+    // parameter @to: destination
+    // parameter @date: departure date
+    // parameter @airline: using airline
     function fetchSearch(from, to, date, airline) {
         let url = "search.php?from=" +from + "&to=" + to 
                     + "&date=" + date + "&airline=" + airline;   // put url string here
@@ -100,11 +105,13 @@ const header = document.querySelector('.header.container');
                 .catch(console.log());
     }
 
+    // toggle the menu logo once clicked 
     function hamburgerClick() {
         qs('.hamburger').classList.toggle('active');
         qs(".nav-list ul").classList.toggle('active');
     }
 
+    // make the home page appear 
     function showHomePage() {
         $("listings").style.display="none";
         $("section-explain").style.display="block";
@@ -141,11 +148,21 @@ const header = document.querySelector('.header.container');
         // );
     }
 
+    // add all the dog list on the page
+    // parameter @data: json data of dog lists
     function addItem(data) {
         console.log(data);
+        if (data.length == 0) {
+            let line = document.createElement("h2");
+            line.innerText = "Unfortunately, we don't have any dogs going to your destination." + 
+            "\n You can sign up to get a notification once we have any dogs going to your destination." 
+            line.setAttribute("id", "no-dogs");
+            $("lastRow").appendChild(line);
+        }
         for (let dog of data) {
             let name = dog["name"];
             let info = dog["comment"];
+            let pic = dog["photo"];
             let item = document.createElement("div");
             let discription = document.createElement("div");
             let nameDom = document.createElement("h2");
@@ -153,6 +170,12 @@ const header = document.querySelector('.header.container');
             let a = document.createElement("a");
             nameDom.innerText = name;
             p.innerText = info;
+            console.log(pic);
+            if (pic == "") {
+                item.style.backgroundColor="lightgrey";
+            } else {
+                item.style.backgroundImage = "url(./img/" + pic + ".jpg)";
+            }
             item.classList.add("item");
             discription.classList.add("discription");
             nameDom.classList.add("name");
@@ -165,11 +188,11 @@ const header = document.querySelector('.header.container');
         }    
     }
 
+    // find the last row of the listing page and return the last row div 
     function lastRow() {
         let items = qsa("#lastRow .item");
         let count = items.length;
         if (count < 3) {
-            console.log(count);
             return $("lastRow");
         } else {
             console.log("no lastRow");
@@ -181,10 +204,7 @@ const header = document.querySelector('.header.container');
             return row;
         }
     }
-    //example:  element.addEventListener("click", function );
-
-    //Functions 
-
+//-------------------------------Helper function------------------------------------
     function $(name) {
         return document.getElementById(name);
     }

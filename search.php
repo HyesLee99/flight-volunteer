@@ -36,6 +36,7 @@
                 $item["date"] = $row["date"];
                 $item["airline"] = $row["airline"];
                 $item["comment"] = $row["info"];
+                $item["photo"] = $row["photo"];
                 array_push($output, $item);
                 break;
             }
