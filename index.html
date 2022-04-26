@@ -30,24 +30,31 @@
 								<li>
 									<a href="#section-contact" id="nav-contact"> <h1>Contact Us</h1></a> 
 								</li>
-								<!--<li>
-									<a href="#section-contact"> <h1>log in</h1></a> 
-								</li>-->
+								<li>
+									<a href="#log-in-page" id="log-in"> <h1>log in</h1></a> 
+								</li>
 							</ul>
 						</div>
 					</div>
 				</div>
 			</section>
-			<!--Hearo section -->
+			<section id="log-in-page">
+                <form>
+                    <h1>Log In</h1>
+                    <div>
+                        <label>Username: </label><br>
+                        <input type="text" id="id"><br>
+                        <label>Password: </label><br>
+                        <input type="password" id="password"><br>
+                        <input type="submit" value="submit">
+                    </div>
+                </form>
+            </section>
+			<!--Hero section -->
 			<section id="hero">
 				<div class="hero container" id="page1">
 					<div>
 						<h1 id="title">Flight Volunteer</h1>
-					<!--	<div id="logIn">
-							<div id="id">put ID</div>
-							<div id="passcode">put passcode</div>
-							<button type="button">Log in</button>
-						</div> -->
 						<div id="search">
 							<div id="flight-info"> 
 								<div id="from">
@@ -124,31 +131,20 @@
 			</section>
 			<section id="section-contact">
 				<div id="contact" class="container">
-					<form  onsubmit="sendEmail(); return false;">
-						<h1 class="section-title" id="contact-us"> Contact us!</h1>
-						<div id="contact-container">
-							<div id="contact-info">
-								<!--<form method="post" action="contact.php">
-									<input type=text placeholder="name"> 
-									<input type=text placeholder="email"> 
-									<input type=text placeholder="phone number"> 
-									<input type=text placeholder="message">
-									<textarea name="message" class="form-control" placeholder="message" row="4" required></textarea>
-									<input type="submit" value="SendMessage">
-								</form>-->
-								<div class="contact-input"><h2>Name:</h2><input type=text> </div> 
-								<div class="contact-input"><h2>Email Address:</h2><input type=text> </div> 
-								<div class="contact-input"><h2>Phone number:</h2><input type=text> </div> 
-							</div>
-							<div id="message"><h2>Message</h2> <input type=text id="message-input">  </div>
+					<h1 class="section-title" id="contact-us"> Contact us!</h1>
+					<div id="contact-container">
+						<div id="contact-info">
+							<div class="contact-input"><h2>Name:</h2><input type=text> </div> 
+							<div class="contact-input"><h2>Email Address:</h2><input type=text> </div> 
+							<div class="contact-input"><h2>Phone number:</h2><input type=text> </div> 
 						</div>
-						<div id="button-container">
-							<a type="submit" id="send-button" class="button">Send!</a>
-						</div>
-					</form>
+						<div id="message"><h2>Message</h2> <input type=text id="message-input">  </div>
+					</div>
+					<div id="button-container">
+						<a type="submit" id="send-button" class="button">Send!</a>
+					</div>
 				</div>
 			</section>
-				
 			<section id="listings">
 				<div id="listing-page" class="container">
 					<div id="page-top">
@@ -189,7 +185,6 @@
 					<div class=lists>
 						<div class="row" id="lastRow">
 							<div class="item"> 
-								<!--<div class="icon">Picture here <img src="./img/dogIcon.png"></div>-->
 								<div class="discription"> 
 									<h2 class="name">John Doe</h2>
 									<p>

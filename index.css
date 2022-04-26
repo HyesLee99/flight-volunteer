@@ -305,8 +305,8 @@ p, ol {
 }
 
 #header .nav-list ul a h1:hover {
-    color: white;
-    -webkit-text-stroke: 2px var(--clr-yellow);
+    color: grey;
+    
 }
 
 #nav-bar a  h1 {
@@ -341,7 +341,7 @@ p, ol {
     height: 60px;
     width: 60px;
     display: inline-block;
-    border: 2px solid black;
+    border: 2.5px solid black;
     border-radius: 50%;
     position: relative;
     display: flex;
@@ -517,3 +517,38 @@ p, ol {
 }
 /* fix the bug*/
 
+/* Log in page */
+
+#log-in-page {
+    padding: 20%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    margin-left:auto;
+    margin-right:auto;
+    width: 50%;
+    height: 50%;
+}
+
+#log-in-page > form {
+    padding: 20px; 
+    height: 300px;
+    justify-content: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 1rem;
+}
+
+#log-in-page > form > h1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#log-in-page > form > div > input {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+#log-in-page > form > div > label {
+    font-size: 12px;
+}

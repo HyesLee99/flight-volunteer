@@ -21,6 +21,7 @@ const header = document.querySelector('.header.container');
         $("listings").style.display= "none";
         $("search-list-1").addEventListener("click", search);
         $("search-list-2").addEventListener("click", search);
+        $("log-in").addEventListener("click", logIn);
         let hamburger = qs('.hamburger');
         hamburger.addEventListener("click", hamburgerClick);
         document.addEventListener('scroll', ()=>{
@@ -37,6 +38,21 @@ const header = document.querySelector('.header.container');
         menuItem.forEach((item)=>{
             item.addEventListener("click", hamburgerClick);
         })
+    }
+
+    // toggle the menu logo once clicked 
+    function hamburgerClick() {
+        qs('.hamburger').classList.toggle('active');
+        qs(".nav-list ul").classList.toggle('active');
+    }
+
+    // make the home page appear 
+    function showHomePage() {
+        $("listings").style.display="none";
+        $("section-explain").style.display="block";
+        $("section-contact").style.display="block";
+        $("section-process").style.display="block";
+        $("hero").style.display="block"; // why this is only block? 
     }
 
     // fetch the search result and list them on the page
@@ -83,7 +99,6 @@ const header = document.querySelector('.header.container');
         $("nav-contact").addEventListener("click",showHomePage);
         let rows = qsa(".item");
         eraseAll(rows);
-        console.log($("no-dogs") );
         if ($("no-dogs") != null) {
             $("no-dogs").parentElement.removeChild($("no-dogs"));
         }
@@ -104,51 +119,7 @@ const header = document.querySelector('.header.container');
                 .then(addItem)
                 .catch(console.log());
     }
-
-    // toggle the menu logo once clicked 
-    function hamburgerClick() {
-        qs('.hamburger').classList.toggle('active');
-        qs(".nav-list ul").classList.toggle('active');
-    }
-
-    // make the home page appear 
-    function showHomePage() {
-        $("listings").style.display="none";
-        $("section-explain").style.display="block";
-        $("section-contact").style.display="block";
-        $("section-process").style.display="block";
-        $("hero").style.display="block"; // why this is only block? 
-    }
-
-    function sendEmail() {
-        let contactInfo = qsa('.contact-input input');
-        let message = $("message-input").value;
-        let name = contactInfo[0].value;
-        let emailAdd = contactInfo[1].value;
-        let number = contactInfo[2].value; 
-        // use ajax? to send the email 
-        alert("Sent!");
-        for (let i= 0; i < contactInfo.length; i++) {
-            contactInfo[i].value = "";
-        }
-        // $("message-input").value = "";
-//iommoyehnqhbjnhy
-        // code to send email. 
-        // Email.send({
-        //     //secureToken: "c06710eb-be8a-4980-a13a-1fc767cf0bd3",
-        //     Host : "smtp.gmail.com", // need to find another smtp
-        //     Username : "devtesting0126@gmail.com",
-        //     Password : "devtesting1111!",
-        //     To : "devtesting0126@gmail.com",
-        //     From : emailAdd,
-        //     Subject : "Test email",
-        //     Body : message
-        // }).then(
-        //     message => alert(message)
-        // );
-    }
-
-    // add all the dog list on the page
+// add all the dog list on the page
     // parameter @data: json data of dog lists
     function addItem(data) {
         console.log(data);
@@ -204,6 +175,45 @@ const header = document.querySelector('.header.container');
             return row;
         }
     }
+
+    // Log in to the account;
+    function logIn() {
+        // why glitching when changing display style for more than three sections
+        $("section-explain").style.display="none";
+        $("section-contact").style.display="none";
+        $("section-process").style.display="none";
+        $("hero").style.display="none";
+        $("log-in-page").style.display="flex";
+    }
+    
+    // Sending email but need to fun on hosting server 
+    function sendEmail() {
+        let url = 'email.php';
+        let data = new FormData();
+        let contactInfo = qsa('.contact-input input');
+        let message = $("message-input").value;
+        let name = contactInfo[0].value;
+        let emailAdd = contactInfo[1].value;
+        let number = contactInfo[2].value; 
+        data.append("name", name);
+        data.append("e-address", emailAdd);
+        data.append("number", number);
+        data.append("msg", message);
+
+        fetch(url, {method:'POST', body: data}) 
+            .then(checkStatus)
+            //.then(JSON.parse)
+            .then(data => {
+                console.log('Success: ' + data);
+            })
+            .catch((error) => {
+                console.log('Error: ' + error);
+            });
+        // use ajax? to send the email 
+        alert("Sent!");
+    }
+
+    
 //-------------------------------Helper function------------------------------------
     function $(name) {
         return document.getElementById(name);
