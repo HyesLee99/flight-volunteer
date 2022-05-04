@@ -519,7 +519,7 @@ p, ol {
 
 /* Log in page */
 
-#log-in-page {
+#log-in-page, #sign-up-page {
     padding: 20%;
     display: none;
     justify-content: center;
@@ -527,28 +527,62 @@ p, ol {
     align-self: center;
     margin-left:auto;
     margin-right:auto;
-    width: 50%;
-    height: 50%;
 }
 
-#log-in-page > form {
+#log-in-page > form, 
+#sign-up-page > form {
     padding: 20px; 
-    height: 300px;
+    width: 317px;
     justify-content: center;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 1rem;
 }
 
-#log-in-page > form > h1 {
+#log-in-page > form {
+    height: 300px;
+}
+
+#sign-up-page > form {
+    height: 420px;
+}
+
+#log-in-page > form > h1, 
+#sign-up-page > form > h1 {
     text-align: center;
     margin-bottom: 10px;
 }
 
-#log-in-page > form > div > input {
+#log-in-page > form > div > input, 
+#sign-up-page > form > div > input {
     margin-top: 5px;
     margin-bottom: 10px;
+    height: 35px;
 }
 
-#log-in-page > form > div > label {
+#log-in-page > form > div > label,
+#sign-up-page > form > div > label {
     font-size: 12px;
+}
+
+#log-in-page > form > div > p, 
+#sign-up-page > form > div > p {
+    font-size:8px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#log-in-submit, 
+#signup-submit {
+    width: 80px;
+    outline-style: none;
+    border-radius: 0.5rem;
+}
+
+.pws, .ids, #email-signup {
+    width: 200px;
+}
+
+#flight-info > div > div> input {
+    margin-left: 2px;
+    margin-right: 2px;
 }

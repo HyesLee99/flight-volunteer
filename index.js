@@ -21,7 +21,17 @@ const header = document.querySelector('.header.container');
         $("listings").style.display= "none";
         $("search-list-1").addEventListener("click", search);
         $("search-list-2").addEventListener("click", search);
-        $("log-in").addEventListener("click", logIn);
+        $("log-in").addEventListener("click", logInPage);
+        $("log-in-submit").addEventListener("click", logIn);
+        $("go-to-login").addEventListener("click", logInPage);
+        $("signup-submit").addEventListener("click", signUp);
+        $("go-to-signup").addEventListener("click", signUpPage);
+        qs(".brand").addEventListener("click",showHomePage);
+        $("nav-home").addEventListener("click",showHomePage);
+        $("nav-about").addEventListener("click",showHomePage);
+        $("nav-proc").addEventListener("click",showHomePage);
+        $("nav-contact").addEventListener("click",showHomePage);
+        
         let hamburger = qs('.hamburger');
         hamburger.addEventListener("click", hamburgerClick);
         document.addEventListener('scroll', ()=>{
@@ -49,6 +59,8 @@ const header = document.querySelector('.header.container');
     // make the home page appear 
     function showHomePage() {
         $("listings").style.display="none";
+        $("log-in-page").style.display="none";
+        $("sign-up-page").style.display="none";
         $("section-explain").style.display="block";
         $("section-contact").style.display="block";
         $("section-process").style.display="block";
@@ -92,11 +104,7 @@ const header = document.querySelector('.header.container');
         $("hero").style.display="none";
 
         // eventListener when clicked title, or any nav bars
-        qs(".brand").addEventListener("click",showHomePage);
-        $("nav-home").addEventListener("click",showHomePage);
-        $("nav-about").addEventListener("click",showHomePage);
-        $("nav-proc").addEventListener("click",showHomePage);
-        $("nav-contact").addEventListener("click",showHomePage);
+
         let rows = qsa(".item");
         eraseAll(rows);
         if ($("no-dogs") != null) {
@@ -177,15 +185,123 @@ const header = document.querySelector('.header.container');
     }
 
     // Log in to the account;
-    function logIn() {
+    function logInPage() {
         // why glitching when changing display style for more than three sections
         $("section-explain").style.display="none";
         $("section-contact").style.display="none";
         $("section-process").style.display="none";
         $("hero").style.display="none";
+        $("sign-up-page").style.display="none";
         $("log-in-page").style.display="flex";
     }
+
+    function logIn() {
+        let url = "logIn.php";
+        let username = $("id").value;
+        let password = $("password").value;
+        
+        // if username contains other than alpha numeric
+        // if password does not match
+        // if password is less than 8 words 
+        // return false;
+        let data = new FormData();
+        data.append("username", username);
+        data.append("password", password);
+        fetch(url, {method:'POST'})
+            .then(checkStatus)
+            .then(JSON.parse)
+            .then(console.log())
+            .catch(console.log());
+    }
+
+    // Make signup page appear and other pages disappear
+    function signUpPage() {
+        $("section-explain").style.display="none";
+        $("section-contact").style.display="none";
+        $("section-process").style.display="none";
+        $("hero").style.display="none";
+        $("log-in-page").style.display="none";
+        $("sign-up-page").style.display="flex";
+    }
+
+    // Create account with given username, password, and email 
+    // Alert to users if any input is invalid
+    function signUp() {
+        let url = "signup.php";
+        let username = $("id-signup").value;
+        let password = $("password-signup").value;
+        let passwordRepeat = $("password-signup-repeat").value;
+        let email = $("email-signup").value;
+        // Validating the data 
+        if (username == "" || password == "" || password == "" || 
+            email == "") {
+            alert("Please fill in all of the fields");
+            return;
+        }
+        if (!validUsername(username)) {
+            alert("Username is not valid. Must be 6 to 20 " 
+            + "alpanumeric characters ");
+            return;
+        }
+        if (!validPassword(password, passwordRepeat)) {
+            alert("Passwords do not match or passwords are less than 6 characters")
+            return;
+        }
+        if (!validEmail(email)) {
+            alert("Email is not valid");
+            return;
+        }
+        let data = new FormData();
+        data.append("username", username);
+        data.append("password", password);
+        data.append("email", email);
+        fetch(url, {method: 'POST', body: data})
+            .then(checkStatus)
+            .then(JSON.parse)
+            .then(signedIn)
+            .catch(console.log);
+    }
+
+    // Inform users whether the signin was successful or not
+    function signedIn(data) {
+        if (data.hasOwnProperty("Success")) {
+            alert(data["Success"]);
+            logInPage();
+            $("id-signup").value = "";
+            $("password-signup").value = "";
+            $("password-signup-repeat").value = "";
+            $("email-signup").value = "";
+        } else {
+            alert(data["Failed"]);
+            return;
+        }
+    }
     
+    // Check if the username is valid. Username should be made with  
+    // 6 to 20 alphanumeric characters.
+    function validUsername(username) {
+        let usernameRegex = /^[a-zA-Z0-9]+$/;
+        return usernameRegex.test(username) && username.length <= 20  && 
+        username.length >= 6;
+    }
+
+    function validPassword(pwd, pwd2) {
+        if (pwd !== pwd2) {
+            return false;
+        }
+        return (pwd === pwd2) && pwd.length >= 6;
+    }
+    function validEmail(email) 
+    {
+        let re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    }
+
+    
+    
+
+    
+
     // Sending email but need to fun on hosting server 
     function sendEmail() {
         let url = 'email.php';

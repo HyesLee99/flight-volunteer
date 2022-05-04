@@ -16,7 +16,7 @@
 
     // Select all the rows from the table
     try {
-        $rows = $db ->query("SELECT * FROM `doglist` WHERE departure = '".$from."'");
+        $rows = $db ->query("SELECT * FROM `doglist` WHERE dogs_departure = '".$from."'");
     } catch (PDOException $ex) {
         db_error_message("Can not query the database", $ex);
     }
@@ -25,18 +25,18 @@
     header("Content-Type: application/json");
     $output = array();
     foreach($rows as $row) {
-        $destination = $row["destination"];
+        $destination = $row["dogs_destination"];
         $arr = explode(",", $destination);
         foreach ($arr as $place) {
-            if ($place == $to) {
+            if ($place == $to) { // if there are 7 days before the flight 
                 $item = array();
-                $item["name"] = $row["name"];
-                $item["departure"] = $row["departure"];
-                $item["destination"] = $row["destination"];
-                $item["date"] = $row["date"];
-                $item["airline"] = $row["airline"];
-                $item["comment"] = $row["info"];
-                $item["photo"] = $row["photo"];
+                $item["name"] = $row["dogs_name"];
+                $item["departure"] = $row["dogs_departure"];
+                $item["destination"] = $row["dogs_destination"];
+                $item["date"] = $row["dogs_date"];
+                $item["airline"] = $row["dogs_airline"];
+                $item["comment"] = $row["dogs_info"];
+                $item["photo"] = $row["dogs_photo"];
                 array_push($output, $item);
                 break;
             }

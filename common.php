@@ -3,7 +3,7 @@
     $port = "3307";
     $user = "root";
     $password = "root";
-    $dbname = "mysql";
+    $dbname = "flight_volunteer";
 
     $ds = "mysql:host={$host}:{$port};dbname={$dbname};charset=utf8";
     

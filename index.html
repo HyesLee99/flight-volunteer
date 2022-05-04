@@ -43,10 +43,28 @@
                     <h1>Log In</h1>
                     <div>
                         <label>Username: </label><br>
-                        <input type="text" id="id"><br>
+                        <input type="text" id="id" class = "ids"><br>
                         <label>Password: </label><br>
-                        <input type="password" id="password"><br>
-                        <input type="submit" value="submit">
+                        <input type="password" id="password" class = "pws"><br>
+                        <input type="submit" id="log-in-submit" value="submit">
+						<p>Don't have an account? <a id="go-to-signup" href="#sign-up-page">Sign up now</a>
+                    </div>
+                </form>
+            </section>
+			<section id="sign-up-page">
+                <form>
+                    <h1>Sign up</h1>
+                    <div>
+                        <label>Username: </label><br>
+                        <input type="text" id="id-signup" class="ids"><br>
+                        <label>Password: </label><br>
+                        <input type="password" class="pws" id="password-signup"><br>
+						<label>Confirm Password: </label><br>
+                        <input type="password" class="pws" id="password-signup-repeat"><br>
+						<label>Email: </label><br>
+                        <input type="email" id="email-signup"><br>
+                        <input type="submit" id="signup-submit" value="submit">
+						<p>Already have an account? <a id="go-to-login" href="#log-in-page">Log In</a>
                     </div>
                 </form>
             </section>
