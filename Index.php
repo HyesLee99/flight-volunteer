@@ -1,9 +1,7 @@
-<?php
-	session_start();
-?>
+<?php	session_start(); ?>
 
 <!DOCTYPE html> 
-    <html>
+	<html>
         <head>
 			<!--Image from https://m.blog.naver.com/rlaantjd8204/220715116442-->
 	    <title>Flight Volunteer</title>
@@ -34,52 +32,72 @@
 								<li>
 									<a href="#section-contact" id="nav-contact"> <h1>Contact Us</h1></a> 
 								</li>
-								<li >
-									<a href="#log-in-page" id="log-in"> <h1 id="log-in-box" style="font-size:1rem;border-radius: 1rem;padding: 12px;background-color: #ffc06e;">log in</h1></a> 
-								</li>
+                                <li >
+                                    <a href="#log-in-page" id="log-in"> 
+                                        <?php
+                                            if (!isset($_SESSION["userid"])) {
+                                                echo '<h1 id="log-in-box" style="font-size:1rem;border-radius: 1rem;padding: 12px;background-color: #ffc06e;"> log in </h1> </a>'; 
+                                            } else {
+                                                echo '<h1 id="log-in-box" style="font-size:1rem;border-radius: 1rem;padding: 12px;background-color: #ffc06e; display: none;"> log in </h1> </a>';
+                                            }
+                                        ?>
+                                </li>
 								<li>
 									<a href="#my-account" id="account"> 
-									<h1 id="account-box" style="display:none; font-size:1rem;" >My account</h1></a> 
+									<?php
+										if (!isset($_SESSION["userid"])) {
+											echo '<h1 id="account-box" style="font-size:1rem; display:none;" >My account</h1></a>'; 
+										} else {
+											echo '<h1 id="account-box" style="font-size:1rem;" >My account</h1></a>';
+										}
+									?>
 								</li>
 								<li >
-									<a href="#log-out" id="log-out"> <h1 id="log-out-box" style="display:none; font-size:1rem;border-radius: 1rem;padding: 12px;background-color: #ffc06e;">log out</h1></a> 
+									<a href="#log-out" id="log-out"> 
+									<?php
+										if (!isset($_SESSION["userid"])) {
+											echo '<h1 id="log-out-box" style="font-size:1rem;border-radius: 1rem;padding: 12px;background-color: #ffc06e;  display:none;">log out</h1></a>';
+										} else {
+											echo '<h1 id="log-out-box" style="font-size:1rem;border-radius: 1rem;padding: 12px;background-color: #ffc06e;">log out</h1></a>';
+										}
+									?>
 								</li>
-								
 							</ul>
 						</div>
 					</div>
 				</div>
 			</section>
-			<section id="log-in-page">
-                <form>
-                    <h1>Log In</h1>
-                    <div>
-                        <label>Username: </label><br>
-                        <input type="text" id="id" class = "ids"><br>
-                        <label>Password: </label><br>
-                        <input type="password" id="password" class = "pws"><br>
-                        <input type="submit" id="log-in-submit" value="submit">
-						<p>Don't have an account? <a id="go-to-signup" href="#sign-up-page">Sign up now</a>
-                    </div>
-                </form>
-            </section>
-			<section id="sign-up-page">
-                <form>
-                    <h1>Sign up</h1>
-                    <div>
-                        <label>Username: </label><br>
-                        <input type="text" id="id-signup" class="ids"><br>
-                        <label>Password: </label><br>
-                        <input type="password" class="pws" id="password-signup"><br>
-						<label>Confirm Password: </label><br>
-                        <input type="password" class="pws" id="password-signup-repeat"><br>
-						<label>Email: </label><br>
-                        <input type="email" id="email-signup"><br>
-                        <input type="submit" id="signup-submit" value="submit">
-						<p>Already have an account? <a id="go-to-login" href="#log-in-page">Log In</a>
-                    </div>
-                </form>
-            </section>
+            
+			<section id="log-in-page" style="display:none;">
+                    <form>
+                        <h1>Log In</h1>
+                        <div>
+                            <label>Username: </label><br>
+                            <input type="text" id="id" class = "ids"><br>
+                            <label>Password: </label><br>
+                            <input type="password" id="password" class = "pws"><br>
+                            <input type="submit" id="log-in-submit" value="submit">
+                            <p>Don't have an account? <a id="go-to-signup" href="#sign-up-page">Sign up now</a>
+                        </div>
+                    </form>
+                </section>
+                <section id="sign-up-page" style="display:none;">
+                    <form>
+                        <h1>Sign up</h1>
+                        <div>
+                            <label>Username: </label><br>
+                            <input type="text" id="id-signup" class="ids"><br>
+                            <label>Password: </label><br>
+                            <input type="password" class="pws" id="password-signup"><br>
+                            <label>Confirm Password: </label><br>
+                            <input type="password" class="pws" id="password-signup-repeat"><br>
+                            <label>Email: </label><br>
+                            <input type="email" id="email-signup"><br>
+                            <input type="submit" id="signup-submit" value="submit">
+                            <p>Already have an account? <a id="go-to-login" href="#log-in-page">Log In</a>
+                        </div>
+                    </form>
+                </section>
 			<!--Hero section -->
 			<section id="hero">
 				<div class="hero container" id="page1">
@@ -230,23 +248,34 @@
 					
 				</div>
 			</section>
-			<section id="my-account">
-				<div  class="container"> 
-					<h1 class="section-title">Hi this is </h1>
-					<p>
-						Flight Volunteer is a way to help rescue dogs travel and meet their new families in a foreign countries. 
-						<br> <br>
-						After dogs are rescued from unhealthy conditions, they often stay in animal shelters waiting for new families.
-						 A good amount of those rescue dogs get adopted by families in foreign countries. The most widely used way to transport dogs internationally is flying with flight volunteers. 
-						 <br>Flight volunteers will travel with rescue dogs as they would with their own pets. 
-						 Rescuers will prepare all the paperwork for the dogs and volunteers would meet dogs at the airport briefly before the flight. The dogs could either go cargo or cabin with the volunteers. 
-						 Once they arrive at the destination, the volunteer might need to go through security to check a few things about the dogs such as vaccination status, microchip, etc. Again, these paper works are all prepared by rescuers. Volunteer only needs to spare some time before and after the flight. 
-						 <br>Such volunteering work would not only give the rescue dogs a new life with their new family but also provide animal shelters to rescue other dogs who need help. Since the pandemic, animal shelters and rescuers are having a hard time finding volunteers, which means there are many dogs and families which are waiting to meet each other.
-						  <br><br>We wanted to make this flight volunteer more accessible for both volunteers and rescuers. <br>Feel free to reach out if you have any questions about volunteering! 
-						  
-						 <br><br> We are currently only helping rescue dogs from South Korea who needs to travel to North America (Vancouver, Seattle, and California) 
-					</p>
-				</div>
-			</section>
+            
+                <section id="my-account"
+					<?php
+						if (isset($_SESSION["userid"])) {
+							echo 'style="display:flex";';
+						} else {
+							echo 'style="display:none";';
+						}
+					?>
+				>
+                    <div  class="container"> 
+                        <h1 class="section-title"><?php echo $_SESSION["useruid"] .'\'s  account';?></h1>
+                        <p>
+                            Flight Volunteer is a way to help rescue dogs travel and meet their new families in a foreign countries. 
+                            <br> <br>
+                            After dogs are rescued from unhealthy conditions, they often stay in animal shelters waiting for new families.
+                            A good amount of those rescue dogs get adopted by families in foreign countries. The most widely used way to transport dogs internationally is flying with flight volunteers. 
+                            <br>Flight volunteers will travel with rescue dogs as they would with their own pets. 
+                            Rescuers will prepare all the paperwork for the dogs and volunteers would meet dogs at the airport briefly before the flight. The dogs could either go cargo or cabin with the volunteers. 
+                            Once they arrive at the destination, the volunteer might need to go through security to check a few things about the dogs such as vaccination status, microchip, etc. Again, these paper works are all prepared by rescuers. Volunteer only needs to spare some time before and after the flight. 
+                            <br>Such volunteering work would not only give the rescue dogs a new life with their new family but also provide animal shelters to rescue other dogs who need help. Since the pandemic, animal shelters and rescuers are having a hard time finding volunteers, which means there are many dogs and families which are waiting to meet each other.
+                            <br><br>We wanted to make this flight volunteer more accessible for both volunteers and rescuers. <br>Feel free to reach out if you have any questions about volunteering! 
+                            
+                            <br><br> We are currently only helping rescue dogs from South Korea who needs to travel to North America (Vancouver, Seattle, and California) 
+                        </p>
+                    </div>
+                </section>
+
 		</body>
     </html>
+

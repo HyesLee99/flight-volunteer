@@ -21,11 +21,20 @@ const header = document.querySelector('.header.container');
         $("listings").style.display= "none";
         $("search-list-1").addEventListener("click", search);
         $("search-list-2").addEventListener("click", search);
+        
+        // logout buttons 
+        $("log-out").addEventListener("click", logout);
+        
+        // login buttons 
         $("log-in").addEventListener("click", logInPage);
         $("log-in-submit").addEventListener("click", logIn);
         $("go-to-login").addEventListener("click", logInPage);
+        
+        // signup buttons 
         $("signup-submit").addEventListener("click", signUp);
         $("go-to-signup").addEventListener("click", signUpPage);
+        // nav bar buttons 
+
         qs(".brand").addEventListener("click",showHomePage);
         $("nav-home").addEventListener("click",showHomePage);
         $("nav-about").addEventListener("click",showHomePage);
@@ -52,6 +61,7 @@ const header = document.querySelector('.header.container');
         menuItem.forEach((item)=>{
             item.addEventListener("click", hamburgerClick);
         })
+        
     }
 
     // toggle the menu logo once clicked 
@@ -192,23 +202,21 @@ const header = document.querySelector('.header.container');
         }
     }
 
-    // Log in to the account;
+    // Switch to log in page
     function logInPage() {
-        // why glitching when changing display style for more than three sections
         hideHomePage();
+        $("listings").style.display="none";
         $("sign-up-page").style.display="none";
         $("log-in-page").style.display="flex";
     }
 
+    // Log in with given username and password 
+    // handles error if there is no account that matches 
+    // the username and password. 
     function logIn() { 
         let url = "logIn.php";
         let username = $("id").value;
         let password = $("password").value;
-        
-        // if username contains other than alpha numeric
-        // if password does not match
-        // if password is less than 8 words 
-        // return false;
         let data = new FormData();
         data.append("username", username);
         data.append("password", password);
@@ -219,9 +227,8 @@ const header = document.querySelector('.header.container');
             .catch(console.log);
     }
 
+    // Log in to the account and show the my account page
     function loggedIn(data) {
-        console.log(data);
-        console.log("in the loggedIn function");
         if (data.hasOwnProperty("Success")) {
             alert(data["Success"]);
             $("id").value = "";
@@ -231,8 +238,8 @@ const header = document.querySelector('.header.container');
             $("log-out-box").style.display = "flex";
             $("log-out").addEventListener("click", logout);
             $("account-box").style.display = "flex";
+            qs("#my-account > div > h1").innerText = data["username"] +  "'s  account";
             myAccountPage();
-            qs("#my-account > div > h1").innerText = "Hello, " + data["username"];   
             hideHomePage();
         } else {
             alert(data["Failed"]);
@@ -260,11 +267,13 @@ const header = document.querySelector('.header.container');
     function myAccountPage() {
         hideHomePage();
         $("my-account").style.display = "flex";
+        
     }
 
     // Make signup page appear and other pages disappear
     function signUpPage() {
         hideHomePage();
+        $("listings").style.display="none";
         $("log-in-page").style.display="none";
         $("sign-up-page").style.display="flex";
     }
@@ -320,7 +329,7 @@ const header = document.querySelector('.header.container');
             $("email-signup").value = "";
         } else {
             alert(data["Failed"]);
-            return;
+            //return;
         }
     }
     
