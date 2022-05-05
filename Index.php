@@ -120,9 +120,7 @@
 								<div id="date">
 									<label>Choose date</label>
 									<div>
-										<input type="date" id="depart-1" name="depart-date"
-										value="2022-01-01"
-										min="2022-01-01" max="2023-01-01">
+										<input type="date" id="depart-1" name="depart-date">
 									</div>
 								</div>
 								<div >

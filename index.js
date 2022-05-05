@@ -44,6 +44,20 @@ const header = document.querySelector('.header.container');
         
         let hamburger = qs('.hamburger');
         hamburger.addEventListener("click", hamburgerClick);
+
+        // setting the minimum date to be today's date 
+        let today = new Date().toDateInputValue();
+        $("depart-1").value = getDate(7,0);//today;
+        $("depart-2").value = getDate(7,0);
+        $("depart-1").min = getDate(7,0);
+        $("depart-2").min = getDate(7,0);
+        
+
+
+        $("depart-1").max = getDate(0,1);
+        $("depart-2").max = getDate(0,1);
+        
+        
         document.addEventListener('scroll', ()=>{
             let scroll_position = window.scrollY;
             if(scroll_position > 10){
@@ -63,6 +77,40 @@ const header = document.querySelector('.header.container');
         })
         
     }
+
+    function getDate(addDate, addYear) {
+        let date = new Date();
+
+        var day = date.getDate() + addDate;
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear() + addYear;
+
+        if (((month == 1 ||month == 3 ||month == 5 ||month == 7 ||month == 8 
+            || month == 10 ||month == 12) && day > 31)) {
+            day = day - 31;
+            month++;
+        } else if (((month == 4 ||month == 6 ||month == 9 ||month == 10) && day > 30)) {
+            day = day - 30;
+            month++
+        } else if (month == 2 && day > 28) {
+            day = day - 28;
+            month++;
+        }
+
+        if (month > 12) {
+            year++;
+            month = 12 - month;
+        }
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        var today = year + "-" + month + "-" + day; 
+        return today;
+    }
+
 
     // toggle the menu logo once clicked 
     function hamburgerClick() {
@@ -415,6 +463,12 @@ const header = document.querySelector('.header.container');
              arr[i].parentElement.removeChild(arr[i]);
          }
     }
+
+    Date.prototype.toDateInputValue = (function() {
+        var local = new Date(this);
+        local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+        return local.toJSON().slice(0,10);
+    });
 
       /*
    * Helper function to return the response's result text if successful, otherwise
