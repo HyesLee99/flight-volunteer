@@ -31,6 +31,7 @@ const header = document.querySelector('.header.container');
         $("nav-about").addEventListener("click",showHomePage);
         $("nav-proc").addEventListener("click",showHomePage);
         $("nav-contact").addEventListener("click",showHomePage);
+        $("account-box").addEventListener("click", myAccountPage);
         
         let hamburger = qs('.hamburger');
         hamburger.addEventListener("click", hamburgerClick);
@@ -38,9 +39,12 @@ const header = document.querySelector('.header.container');
             let scroll_position = window.scrollY;
             if(scroll_position > 10){
                 header.style.backgroundColor =  "#FFC06E";
-
+                $("log-in-box").style.backgroundColor = "white";
+                $("log-out-box").style.backgroundColor = "white";
             } else {
                 header.style.backgroundColor = "transparent" ;
+                $("log-in-box").style.backgroundColor = "#FFC06E";
+                $("log-out-box").style.backgroundColor = "#FFC06E";
             }
         })
         $("send-button").addEventListener("click", sendEmail);
@@ -61,12 +65,19 @@ const header = document.querySelector('.header.container');
         $("listings").style.display="none";
         $("log-in-page").style.display="none";
         $("sign-up-page").style.display="none";
+        $("my-account").style.display="none";
         $("section-explain").style.display="block";
         $("section-contact").style.display="block";
         $("section-process").style.display="block";
         $("hero").style.display="block"; // why this is only block? 
     }
 
+    function hideHomePage() {
+        $("section-explain").style.display="none";
+        $("section-contact").style.display="none";
+        $("section-process").style.display="none";
+        $("hero").style.display="none";
+    }
     // fetch the search result and list them on the page
     function search() {
         let from = "";
@@ -98,11 +109,8 @@ const header = document.querySelector('.header.container');
         $("airline-1").value = "";
         // change the page 
         $("listings").style.display="inline";
-        $("section-explain").style.display="none";
-        $("section-contact").style.display="none";
-        $("section-process").style.display="none";
-        $("hero").style.display="none";
-
+        
+        hideHomePage();
         // eventListener when clicked title, or any nav bars
 
         let rows = qsa(".item");
@@ -187,15 +195,12 @@ const header = document.querySelector('.header.container');
     // Log in to the account;
     function logInPage() {
         // why glitching when changing display style for more than three sections
-        $("section-explain").style.display="none";
-        $("section-contact").style.display="none";
-        $("section-process").style.display="none";
-        $("hero").style.display="none";
+        hideHomePage();
         $("sign-up-page").style.display="none";
         $("log-in-page").style.display="flex";
     }
 
-    function logIn() {
+    function logIn() { 
         let url = "logIn.php";
         let username = $("id").value;
         let password = $("password").value;
@@ -207,19 +212,59 @@ const header = document.querySelector('.header.container');
         let data = new FormData();
         data.append("username", username);
         data.append("password", password);
-        fetch(url, {method:'POST'})
+        fetch(url, {method:'POST', body: data})
             .then(checkStatus)
             .then(JSON.parse)
-            .then(console.log())
-            .catch(console.log());
+            .then(loggedIn)
+            .catch(console.log);
+    }
+
+    function loggedIn(data) {
+        console.log(data);
+        console.log("in the loggedIn function");
+        if (data.hasOwnProperty("Success")) {
+            alert(data["Success"]);
+            $("id").value = "";
+            $("password").value = "";
+            $("log-in-page").style.display="none";
+            $("log-in-box").style.display = "none";
+            $("log-out-box").style.display = "flex";
+            $("log-out").addEventListener("click", logout);
+            $("account-box").style.display = "flex";
+            myAccountPage();
+            qs("#my-account > div > h1").innerText = "Hello, " + data["username"];   
+            hideHomePage();
+        } else {
+            alert(data["Failed"]);
+            return;
+        }
+    }
+
+    function logout() {
+        console.log("logged out ");
+        
+        let url = "logout.php";
+        fetch(url, {method:'GET'})
+            .then(checkStatus)
+            .then(data => {
+                alert("You have successfully logged out!");
+                $("log-in-box").style.display = "flex";
+                $("log-out-box").style.display = "none";
+                $("my-account").style.display = "none";
+                $("account-box").style.display = "none";
+                showHomePage();
+            })
+            .catch(console.log);
+    }
+
+    function myAccountPage() {
+        hideHomePage();
+        $("my-account").style.display = "flex";
     }
 
     // Make signup page appear and other pages disappear
     function signUpPage() {
-        $("section-explain").style.display="none";
-        $("section-contact").style.display="none";
-        $("section-process").style.display="none";
-        $("hero").style.display="none";
+        hideHomePage();
         $("log-in-page").style.display="none";
         $("sign-up-page").style.display="flex";
     }
@@ -258,12 +303,14 @@ const header = document.querySelector('.header.container');
         fetch(url, {method: 'POST', body: data})
             .then(checkStatus)
             .then(JSON.parse)
-            .then(signedIn)
+            .then(signedUp)
             .catch(console.log);
     }
 
     // Inform users whether the signin was successful or not
-    function signedIn(data) {
+    // Parameter: 
+    //      data(JSON): contains signing-up result
+    function signedUp(data) {
         if (data.hasOwnProperty("Success")) {
             alert(data["Success"]);
             logInPage();
@@ -279,18 +326,29 @@ const header = document.querySelector('.header.container');
     
     // Check if the username is valid. Username should be made with  
     // 6 to 20 alphanumeric characters.
+    // Parameter: 
+    //      username(String): username
     function validUsername(username) {
         let usernameRegex = /^[a-zA-Z0-9]+$/;
         return usernameRegex.test(username) && username.length <= 20  && 
         username.length >= 6;
     }
 
+    // Check if the password is valid.
+    // Password should be more than 6 characters and match with passwordRepeat
+    // parameter:
+    //      pwd(String): password
+    //      pwd2(String): password repeat 
     function validPassword(pwd, pwd2) {
         if (pwd !== pwd2) {
             return false;
         }
         return (pwd === pwd2) && pwd.length >= 6;
     }
+
+    // Check if the email is valid.
+    // Parameter:
+    //      email(String): email
     function validEmail(email) 
     {
         let re = /\S+@\S+\.\S+/;

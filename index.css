@@ -586,3 +586,16 @@ p, ol {
     margin-left: 2px;
     margin-right: 2px;
 }
+
+
+#my-account, #log-out-box{
+    display:none;
+}
+
+#log-out-box {
+    font-size: 1rem;
+}
+
+#account-box {
+    font-size: 1rem;
+}
