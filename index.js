@@ -33,8 +33,8 @@ const header = document.querySelector('.header.container');
         // signup buttons 
         $("signup-submit").addEventListener("click", signUp);
         $("go-to-signup").addEventListener("click", signUpPage);
+        
         // nav bar buttons 
-
         qs(".brand").addEventListener("click",showHomePage);
         $("nav-home").addEventListener("click",showHomePage);
         $("nav-about").addEventListener("click",showHomePage);
@@ -51,9 +51,6 @@ const header = document.querySelector('.header.container');
         $("depart-2").value = getDate(7,0);
         $("depart-1").min = getDate(7,0);
         $("depart-2").min = getDate(7,0);
-        
-
-
         $("depart-1").max = getDate(0,1);
         $("depart-2").max = getDate(0,1);
         
@@ -78,9 +75,12 @@ const header = document.querySelector('.header.container');
         
     }
 
+    // return date in yyyy-mm-dd form.
+    // parameter: 
+    //          adddate(integer): additional day
+    //          addYear(integer): additional year
     function getDate(addDate, addYear) {
         let date = new Date();
-
         var day = date.getDate() + addDate;
         var month = date.getMonth() + 1;
         var year = date.getFullYear() + addYear;
@@ -96,7 +96,6 @@ const header = document.querySelector('.header.container');
             day = day - 28;
             month++;
         }
-
         if (month > 12) {
             year++;
             month = 12 - month;
@@ -297,7 +296,6 @@ const header = document.querySelector('.header.container');
 
     function logout() {
         console.log("logged out ");
-        
         let url = "logout.php";
         fetch(url, {method:'GET'})
             .then(checkStatus)
@@ -315,7 +313,6 @@ const header = document.querySelector('.header.container');
     function myAccountPage() {
         hideHomePage();
         $("my-account").style.display = "flex";
-        
     }
 
     // Make signup page appear and other pages disappear
@@ -411,11 +408,6 @@ const header = document.querySelector('.header.container');
         let re = /\S+@\S+\.\S+/;
         return re.test(email);
     }
-
-    
-    
-
-    
 
     // Sending email but need to fun on hosting server 
     function sendEmail() {

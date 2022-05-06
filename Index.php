@@ -6,6 +6,7 @@
 			<!--Image from https://m.blog.naver.com/rlaantjd8204/220715116442-->
 	    <title>Flight Volunteer</title>
 	    <link href="index.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<script src="index.js"></script>
 		<script src="https://smtpjs.com/v3/smtp.js"></script>
 		</head>
@@ -108,19 +109,19 @@
 								<div id="from">
 									<label>From</label>
 									<div>
-										<input type="text" id="departure-1">
+										<input type="text" id="departure-1" required>
 									</div>
 								</div>
 								<div >
 									<label>To</label>
 									<div>
-										<input type="text" id="to-1">
+										<input type="text" id="to-1" required>
 									</div>
 								</div>
 								<div id="date">
 									<label>Choose date</label>
 									<div>
-										<input type="date" id="depart-1" name="depart-date">
+										<input type="date" id="depart-1" name="depart-date" required>
 									</div>
 								</div>
 								<div >
@@ -241,9 +242,30 @@
 									<a href="#" type="button" class="button">Contact!</a>
 								</div>
 							</div>
+							
 						</div>
 					</div>
-					
+					<div class="popup-view">
+						<div class="popup-card">
+						<a><i class="fa-solid fa-xmark close-btn"></i></a>
+						<div class = "product-img">
+							<img src="img/Jinddu.jpg">
+						</div>
+						<div class="info">
+								<h2>John Doe  <br> <span>15 months neutered male</span></h2>
+								<p>
+									I am 3 years old and I have family waiting for me at Canada. 
+									If your flight destination is Seattle or Vancouver, please help me get to my family!
+								</p>
+								<span class="destination">
+									Destination: New York 
+								</span>
+								<span class="organization">
+									Organization: LifeWithJindo
+								</span>
+								<a href="#" class="send-request">Send request</a>
+						</div>
+					</div>
 				</div>
 			</section>
             
