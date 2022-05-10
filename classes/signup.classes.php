@@ -14,11 +14,11 @@
         protected function setUser($uid, $pwd, $email) {
 
             $dbh = $this-> connect();
-            $stmt = $dbh ->prepare('INSERT INTO users (users_uid, users_pwd, users_email) VALUES (?,?, ?);');
+            $stmt = $dbh ->prepare('INSERT INTO users (users_uid, users_pwd, users_email, firstname, lastname, phone_number,saved_search, contacted) VALUES (?,?,?,?,?,?,?,?);');
             
             $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
-
-            if (!$stmt-> execute(array($uid, $hashedPwd ,$email))) {
+            $arr = array();
+            if (!$stmt-> execute(array($uid, $hashedPwd, $email, "", "", "", json_encode($arr),json_encode($arr)))) {
                 $stmt = null;
                 
                 $output = array();
@@ -26,7 +26,6 @@
                 
                 header("Content-Type: application/json");
                 die(json_encode($output)); 
-                
             }
             $stmt = null;
         }

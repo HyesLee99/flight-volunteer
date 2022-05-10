@@ -72,7 +72,149 @@ const header = document.querySelector('.header.container');
         menuItem.forEach((item)=>{
             item.addEventListener("click", hamburgerClick);
         })
+
+        // my account page
+        let myAccountSideBar = qsa("#side-bar div");
+        for (let i = 0; i < myAccountSideBar.length;i++) {
+            myAccountSideBar[i].addEventListener("click", function() {
+                let arr = qsa("#account-page > div");
+                    for (let j = 0; j < arr.length; j++) {
+                        arr[j].style.display = "none";
+                    }
+                let classList = this.classList;
+                let id = this.id;
+                sideBarSelected(classList);
+                showMyAccountPage(id);
+            });
+        }
+
+        // Saved search
+        $("remove-saved-search").addEventListener("click", removeSaveSearch);
+        $("select-all").addEventListener("click", selectAllCheckBox);
+
+        // update profile 
+        $("update-profile").addEventListener("click", updateProfile);
         
+        // fill out my account page 
+        getInfoForMyAccountPage()
+    }
+    
+    // Get saved search and contacted list of user (if logged in) and parse them on the 
+    // my account page
+    function getInfoForMyAccountPage() {
+       let url = "getInfo.php";
+       fetch(url)
+            .then(checkStatus)
+            .then(JSON.parse)
+            .then(data => {
+                fillSavedSearch(JSON.parse(data["savedsearch"]));
+                fillContactedPage(JSON.parse(data["contacted"]));
+            })
+            .catch(console.log);
+    }
+
+    // Update user profile with give information
+    function updateProfile() {
+        let username = $("username-update").value;
+        let email = $("email-update").value;
+        let firstName = $("first-name-update").value;
+        firstName = firstName.substring(0,1).toUpperCase() + firstName.substring(1).toLowerCase();
+        let lastName = $("last-name-update").value;
+        lastName = lastName.substring(0,1).toUpperCase() + lastName.substring(1).toLowerCase();
+        let number = $("phone-number-update").value;
+        if (!validUsername(username)) {
+            alert("Username is not valid. Must be 6 to 20 " 
+            + "alpanumeric characters ");
+            return;
+        }
+        if (!validEmail(email)) {
+            alert("Email is not valid");
+            return;
+        }
+        let url = "update.php";
+        let data = new FormData();
+        data.append("username", username);
+        data.append("email", email);
+        data.append("firstname", firstName);
+        data.append("lastname", lastName);
+        data.append("number", number);
+        fetch(url, {method: 'POST', body: data})
+            .then(checkStatus)
+            .then(JSON.parse)
+            .then(data => {
+                if (data.hasOwnProperty("Success")) {
+                    alert(data["Success"]);
+                } else {
+                    alert(data["Failed"]);
+                }
+            })
+            .catch(console.log);
+    }
+
+    // Select all the checkboxes in the saved-search page
+    function selectAllCheckBox() {
+        let checkboxes = qsa(".checkbox");
+        if (this.checked) {
+            for (let i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = true;
+            } 
+        } else {
+            for (let i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = false;
+            } 
+        }
+    }
+
+    // Remove the selected saved-search lists 
+    function removeSaveSearch() {
+        let checkboxes = qsa(".checkbox");
+        let arr = [];
+        for (let i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                arr.push(checkboxes[i].value);
+                checkboxes[i].parentElement.parentElement.removeChild(checkboxes[i].parentElement);
+            }
+        }
+        // update...? 
+        let url = "update.php";
+        let data = new FormData();
+        data.append("savedSearch",  JSON.stringify(arr));
+        data.append("action", 'remove');
+        fetch(url, {method: 'POST', body: data})
+            .then(checkStatus)
+            .then(JSON.parse)
+            .then(data => {
+                console.log(data);
+                if (data.hasOwnProperty("Success")) {
+                    alert(data["Success"]);
+                } else {
+                    alert(data["Failed"]);
+                }
+            })
+            .catch(console.log);
+    }
+
+    // Show the ???????????????????????????????
+    function selectAll () {
+        let myAccountSideBar = qsa("#side-bar div");
+        for (let i = 0; i < myAccountSideBar.length;i++) {
+            myAccountSideBar[i].classList.remove("selected");
+        }
+    }
+
+    // Select the given side-bar div and unselect the other side-bar div
+    function sideBarSelected(classList) {
+        let myAccountSideBar = qsa("#side-bar div");
+        for (let i = 0; i < myAccountSideBar.length;i++) {
+            myAccountSideBar[i].classList.remove("selected");
+        }
+        classList.add("selected");
+    }
+
+    // show the account page that matches selected side-bar div
+    function showMyAccountPage(id) {
+        let accountPage = id + "-page";
+        $(accountPage).style.display = "block";
     }
 
     // return date in yyyy-mm-dd form.
@@ -129,12 +271,14 @@ const header = document.querySelector('.header.container');
         $("hero").style.display="block"; // why this is only block? 
     }
 
+    // Hide the home pages
     function hideHomePage() {
         $("section-explain").style.display="none";
         $("section-contact").style.display="none";
         $("section-process").style.display="none";
         $("hero").style.display="none";
     }
+
     // fetch the search result and list them on the page
     function search() {
         let from = "";
@@ -172,6 +316,8 @@ const header = document.querySelector('.header.container');
 
         let rows = qsa(".item");
         eraseAll(rows);
+        let popUps = qsa(".popup-view");
+        eraseAll(popUps);
         if ($("no-dogs") != null) {
             $("no-dogs").parentElement.removeChild($("no-dogs"));
         }
@@ -229,6 +375,60 @@ const header = document.querySelector('.header.container');
             item.appendChild(discription);
             let row = lastRow();
             row.appendChild(item);
+
+            let popupView = document.createElement("div");
+            let popupCard = document.createElement("div");
+            let aTag = document.createElement("a");
+            let close = document.createElement("i");
+            let productImg = document.createElement("div");
+            let img = document.createElement("img");
+            let info2 =document.createElement("div");
+            let h2 = document.createElement("h2");
+            //let span = document.createElement("span");
+            let p2 = document.createElement("p");
+            let destination = document.createElement("span");
+            let organization = document.createElement("span");
+            let sendRequest = document.createElement("a");
+            
+            popupView.classList.add("popup-view");
+            popupView.style.display = "none";
+            popupCard.classList.add("popup-card");
+            close.classList.add("fa-solid");
+            close.classList.add("fa-xmark");
+            close.classList.add("close-btn");
+            productImg.classList.add("product-img");
+            info2.classList.add("info");
+            destination.classList.add("distination");
+            organization.classList.add("organization");
+            sendRequest.classList.add("send-request");
+            
+            img.src = "img/" + pic + ".jpg";
+            productImg.appendChild(img);
+            aTag.appendChild(close);
+            popupCard.appendChild(aTag);
+            popupCard.appendChild(productImg);
+
+            h2.innerHTML = "John Doe  <br> <span>15 months neutered male</span>";
+            p2.innerText = info;
+            destination.innerText = "Destination: " + dog["destination"];
+            organization.innerText = "Organization: LifeWithJindo";
+            sendRequest.innerText = "Send Request";
+            sendRequest.href = "sent-request"; 
+            
+            info2.appendChild(h2);
+            info2.appendChild(p2);
+            info2.appendChild(destination);
+            info2.appendChild(organization);
+            info2.appendChild(sendRequest);
+            popupCard.appendChild(info2);
+            popupView.appendChild(popupCard);
+            $("popup-list").appendChild(popupView);
+            item.addEventListener("click", function() {
+                popupView.style.display = "flex";
+            })
+            close.addEventListener("click", function() {
+                popupView.style.display = "none";
+            })
         }    
     }
 
@@ -276,6 +476,7 @@ const header = document.querySelector('.header.container');
 
     // Log in to the account and show the my account page
     function loggedIn(data) {
+        console.log(data);
         if (data.hasOwnProperty("Success")) {
             alert(data["Success"]);
             $("id").value = "";
@@ -287,12 +488,14 @@ const header = document.querySelector('.header.container');
             $("account-box").style.display = "flex";
             qs("#my-account > div > h1").innerText = data["username"] +  "'s  account";
             myAccountPage();
+            fillMyAccountPage(data);
             hideHomePage();
         } else {
             alert(data["Failed"]);
             return;
         }
     }
+
 
     function logout() {
         console.log("logged out ");
@@ -312,7 +515,80 @@ const header = document.querySelector('.header.container');
 
     function myAccountPage() {
         hideHomePage();
+        $("listings").style.display = "none";
         $("my-account").style.display = "flex";
+        //qs("#side-bar div").classList.add("selected");
+        let thisElement = qs("#side-bar div");
+        let arr = qsa("#account-page > div");
+        for (let j = 0; j < arr.length; j++) {
+            arr[j].style.display = "none";
+        }
+        let classList = thisElement.classList;
+        let id = thisElement.id;
+        sideBarSelected(classList);
+        showMyAccountPage(id);
+    }
+
+    function fillMyAccountPage(data) {
+        $("my-account-header").innerText = data["useruid"] + "\'s account";
+        $("first-name-update").value = data["firstname"];
+        $("last-name-update").value = data["lastname"];
+        $("username-update").value = data["useruid"];
+        $("email-update").value = data["useremail"];
+        $("phone-number-update").value = data["number"];
+        fillSavedSearch(JSON.parse(data["savedsearch"]));
+        fillContactedPage(JSON.parse(data["contacted"]));
+        // fill out requests and saved search
+    }
+
+    // every value is a string of a search
+    function fillSavedSearch(data) {
+        eraseAll(qsa("#checkbox-container .lists"));
+        console.log(data);
+        if (data.length == 0) {
+            return;
+        }
+        for (let i = 0; i < data.length; i++) {
+            let lists = document.createElement("div");
+            lists.classList.add("lists");
+            let checkbox = document.createElement("input");
+            let label = document.createElement("label");
+            checkbox.classList.add("checkbox");
+            checkbox.type = "checkbox";
+            checkbox.value = data[i];
+            label.innerText = data[i];
+            lists.appendChild(checkbox);
+            lists.appendChild(label);
+            $("checkbox-container").appendChild(lists);
+        }
+    }
+
+    function fillContactedPage(data) {
+        eraseAll(qsa("#contacted-list > div"));
+        if (data.length == 0) {
+            return;
+        }
+        for (let i = 0; i < data.length; i++) {
+            let div = document.createElement("div");
+            let img = document.createElement("img");
+            img.src = "img/" + data[i]["img"];
+            let innerDiv = document.createElement("div");
+            let name = document.createElement("h2");
+            name.innerText = data[i]["name"];
+            let destination = document.createElement("p");
+            destination.innerText = "Destination: " + data[i]["destination"]; 
+            let organization = document.createElement("p");
+            organization.innerText = "Organization: " + data[i]["organization"];
+            let contactedDate = document.createElement("p");
+            contactedDate.innerText = "Contacted date: " + data[i]["contactedDate"];
+            div.appendChild(img);
+            innerDiv.appendChild(name);
+            innerDiv.appendChild(destination);
+            innerDiv.appendChild(organization);
+            innerDiv.appendChild(contactedDate);
+            div.appendChild(innerDiv);
+            $("contacted-list").appendChild(div);
+        }
     }
 
     // Make signup page appear and other pages disappear
@@ -365,6 +641,7 @@ const header = document.querySelector('.header.container');
     // Parameter: 
     //      data(JSON): contains signing-up result
     function signedUp(data) {
+        console.log(data);
         if (data.hasOwnProperty("Success")) {
             alert(data["Success"]);
             logInPage();

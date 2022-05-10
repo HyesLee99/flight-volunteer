@@ -9,6 +9,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<script src="index.js"></script>
 		<script src="https://smtpjs.com/v3/smtp.js"></script>
+
 		</head>
 		<body>
 			<!--Header section-->
@@ -245,56 +246,176 @@
 							
 						</div>
 					</div>
-					<div class="popup-view">
-						<div class="popup-card">
-						<a><i class="fa-solid fa-xmark close-btn"></i></a>
-						<div class = "product-img">
-							<img src="img/Jinddu.jpg">
+					<div id="popup-list"> 
+						<div class="popup-view" style="visibility:hidden;" >
+							<div class="popup-card">
+								<a>
+									<i class="fa-solid fa-xmark close-btn"></i>
+								</a>
+								<div class = "product-img">
+									<img src="img/Jinddu.jpg">
+								</div>
+								<div class="info">
+										<h2>John Doe  <br> <span>15 months neutered male</span></h2>
+										<p>
+											I am 3 years old and I have family waiting for me at Canada. 
+											If your flight destination is Seattle or Vancouver, please help me get to my family!
+										</p>
+										<span class="destination">
+											Destination: New York 
+										</span>
+										<span class="organization">
+											Organization: LifeWithJindo
+										</span>
+										<a href="sent-request" class="send-request">Send request</a>
+								</div>
+							</div>
 						</div>
-						<div class="info">
-								<h2>John Doe  <br> <span>15 months neutered male</span></h2>
-								<p>
-									I am 3 years old and I have family waiting for me at Canada. 
-									If your flight destination is Seattle or Vancouver, please help me get to my family!
-								</p>
-								<span class="destination">
-									Destination: New York 
-								</span>
-								<span class="organization">
-									Organization: LifeWithJindo
-								</span>
-								<a href="#" class="send-request">Send request</a>
+					</div>
+					
+				</div>
+			</section>
+            
+			<section id="my-account" style="display:none;">
+				<div  class="container"> 
+					<h1 class="section-title" id="my-account-header"><?php echo $_SESSION["useruid"] .'\'s  account';?></h1>
+					<div> 
+						<div id="side-bar">
+							<div id="profile">Profile</div>
+							<div id="request">Requests</div>
+							<div id="saved-search">Saved Search</div>
+						</div>
+						<div id="account-page">
+							<div id="profile-page">
+								<h2>Profile</h2>
+								<p>Please fill out every box before we have </p>
+								<div class="profile-element"> 
+									<h4>First name : </h4>
+									<input id="first-name-update" value="<?php
+											if (isset($_SESSION["firstname"])) {
+												echo $_SESSION["firstname"];
+											} 
+										?>"; style="margin-left: 28px;">
+									</input> 
+									<h4>Last name : </h4>
+									<input id="last-name-update" value="<?php
+											if (isset($_SESSION["lastname"])) {
+												echo $_SESSION["lastname"];
+											}
+										?>";>
+										
+									</input>
+								</div>
+								<div class="profile-element">
+									<h4>Username : </h4>
+									<input id="username-update" value= "<?php echo $_SESSION["useruid"];?>"; style="margin-left: 32px;">
+									</input>
+								</div>
+								<div class="profile-element"> 
+									<h4>Email : </h4>
+									<input type="email" id="email-update" value="<?php echo $_SESSION["useremail"];?>"; style="margin-left: 57px;">
+									</input>
+								</div>
+								<div class="profile-element"> 
+									<h4>Phone number : </h4>
+									<input type= "tel" id="phone-number-update" value = "<?php
+											if (isset($_SESSION["number"])) {
+												echo $_SESSION["number"];
+											} else {
+												echo "";
+											}
+										?>">
+									</input>
+								</div>
+								<div class="button-wrap">
+									<a href="#" type="button" class="button" id="update-profile">Update</a>
+								</div>
+								
+							</div>
+							<div id="request-page">
+								<h2>Contacted volunteer opportunities</h2>
+								<p>Volunteer opportunities that you contacted</p>
+								<div id="contacted-list" class="scroll-box">
+										<div> 
+											<img src="img/Jinddu.jpg">
+											<div> 
+												<h2> Name of the dog</h2>
+												<p> Destination: USA</p>
+												<p> Organization: </P>
+												<p> Contacted date </p>
+											</div>
+										</div>
+										<div> 
+											<img src="img/Jinddu.jpg">
+											<div> 
+												<h2> Name of the dog</h2>
+												<p> Destination: USA</p>
+												<p> Organization: </P>
+												<p> Contacted date </p>
+											</div>
+										</div>
+										<div> 
+											<img src="img/Jinddu.jpg">
+											<div> 
+												<h2> Name of the dog</h2>
+												<p> Destination: USA</p>
+												<p> Organization: </P>
+												<p> Contacted date </p>
+											</div>
+										</div>
+										<div> 
+											<img src="img/Jinddu.jpg">
+											<div> 
+												<h2> Name of the dog</h2>
+												<p> Destination: USA</p>
+												<p> Organization: </P>
+												<p> Contacted date </p>
+											</div>
+										</div>
+										<div> 
+											<img src="img/Jinddu.jpg">
+											<div> 
+												<h2> Name of the dog</h2>
+												<p> Destination: USA</p>
+												<p> Organization: </P>
+												<p> Contacted date </p>
+											</div>
+										</div>
+										<div> 
+											<img src="img/Jinddu.jpg">
+											<div> 
+												<h2> Name of the dog</h2>
+												<p> Destination: USA</p>
+												<p> Organization: </P>
+												<p> Contacted date </p>
+											</div>
+										</div>
+
+
+								</div>
+							</div>
+							<div id="saved-search-page">
+								<h2>Saved Search</h2>
+								<p>We will send you an email once there is a volunteering opportunity that matches with your schedule</p>
+								<p id="ex" style="margin-top: 0px; margin-bottom: 10px;">ex) Departure city/ Arrival city/ Departure date/ Airline</P>
+								<div id="checkbox-container" class="scroll-box">
+									<div class="lists">
+										<input class="checkbox" type="checkbox">Seoul/Seattle/01-23-2023/United</input>
+									</div>
+									
+								</div> 
+								<div id="saved-search-button-select-all" class="lists" >
+									<input type="checkbox" id="select-all" ><label> Select All</label><br>
+								</div>
+								<div class="button-wrap"> 
+									<a href="#" type="button" class="button" id="remove-saved-search">remove</a>
+								</div>
+									
+							</div>
 						</div>
 					</div>
 				</div>
 			</section>
-            
-                <section id="my-account"
-					<?php
-						if (isset($_SESSION["userid"])) {
-							echo 'style="display:flex";';
-						} else {
-							echo 'style="display:none";';
-						}
-					?>
-				>
-                    <div  class="container"> 
-                        <h1 class="section-title"><?php echo $_SESSION["useruid"] .'\'s  account';?></h1>
-                        <p>
-                            Flight Volunteer is a way to help rescue dogs travel and meet their new families in a foreign countries. 
-                            <br> <br>
-                            After dogs are rescued from unhealthy conditions, they often stay in animal shelters waiting for new families.
-                            A good amount of those rescue dogs get adopted by families in foreign countries. The most widely used way to transport dogs internationally is flying with flight volunteers. 
-                            <br>Flight volunteers will travel with rescue dogs as they would with their own pets. 
-                            Rescuers will prepare all the paperwork for the dogs and volunteers would meet dogs at the airport briefly before the flight. The dogs could either go cargo or cabin with the volunteers. 
-                            Once they arrive at the destination, the volunteer might need to go through security to check a few things about the dogs such as vaccination status, microchip, etc. Again, these paper works are all prepared by rescuers. Volunteer only needs to spare some time before and after the flight. 
-                            <br>Such volunteering work would not only give the rescue dogs a new life with their new family but also provide animal shelters to rescue other dogs who need help. Since the pandemic, animal shelters and rescuers are having a hard time finding volunteers, which means there are many dogs and families which are waiting to meet each other.
-                            <br><br>We wanted to make this flight volunteer more accessible for both volunteers and rescuers. <br>Feel free to reach out if you have any questions about volunteering! 
-                            
-                            <br><br> We are currently only helping rescue dogs from South Korea who needs to travel to North America (Vancouver, Seattle, and California) 
-                        </p>
-                    </div>
-                </section>
 
 		</body>
     </html>

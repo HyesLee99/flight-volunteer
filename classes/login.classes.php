@@ -61,15 +61,15 @@
                     $_SESSION["userid"] = $user[0]["users_id"];
                     $_SESSION["useruid"] = $user[0]["users_uid"];
                     $_SESSION["useremail"] = $user[0]["users_email"];
+
+                    $_SESSION["firstname"] = $user[0]["firstname"];
+                    $_SESSION["lastname"] = $user[0]["lastname"];
+                    $_SESSION["number"] = $user[0]["phone_number"];
+                    $_SESSION["savedsearch"] = $user[0]["saved_search"];
+                    $_SESSION["contacted"] = $user[0]["contacted"];
+                    
                     
                     $stmt = null;
-                    $output = array();
-                    $output["Success"] = "Login successful";
-                    $output["username"] = $user[0]["users_uid"];
-                    $output["email"] = $user[0]["users_email"];
-                    
-                    header("content-type: application/json");
-                    print(json_encode($output));
                 }
             }
         }

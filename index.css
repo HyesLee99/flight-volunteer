@@ -151,6 +151,7 @@ input {
 
 .item:hover {
     transform: scale(1.04);
+    cursor: pointer;
 }
 
 #page-top{
@@ -231,7 +232,6 @@ input {
     display: flex;
     justify-content: center;
     align-items: center;
-    visibility: hidden;
 }
 
 .popup-card {
@@ -312,7 +312,6 @@ input {
 
 .popup-card .info .organization {
     font-size: 10px;
-    margin-left: 10px;
 }
 
 .popup-card .info .send-request {
@@ -422,7 +421,7 @@ p, ol {
     color: grey;
 }
 
-#search>#flight-info>.button {
+#search>#flight-info>.button, #account-page .button {
     display: inline-block;
     font-size: 1.5rem;
     text-transform:uppercase;
@@ -769,3 +768,194 @@ p, ol {
 #account-box {
     font-size: 1rem;
 }
+
+/*my-account page */
+
+#my-account > .container > h1{
+    top: 15%;
+    position: absolute;
+    margin-bottom: 20px;
+}
+
+#side-bar {
+    height: 60%;
+    width: 200px;
+    background-color: #FFC06E;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    align-items: center;
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#account-page {
+    height: 60%;
+    width: 700px;
+    margin-left: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    z-index: 0;
+}
+
+#account-page, #side-bar {
+    margin-top: 20px;
+}
+
+#account-page div {
+    z-index: 1;
+}
+
+#account-page h2 {
+    text-align:center;
+}
+
+
+#side-bar div {
+    width: 230px;
+    font-size: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 1rem;
+    z-index: 2;
+}
+
+#my-account > .container > div {
+    width: 85%;
+    position: absolute;
+    background-color: transparent;
+    height: 90%;
+    margin-top: 20px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    z-index:0;
+} 
+
+#my-account > .container {
+    z-index: 0;
+}
+
+.selected {
+    background-color: white;
+}
+
+#request-page {
+    display:none;
+}
+
+#saved-search-page {
+    display:none;
+}
+
+.profile-element {    
+    display: flex;
+    align-items: baseline;
+}
+
+
+#profile-name h4 {
+    margin-bottom: 10px;
+}
+
+#profile-page h4 {
+    margin-left: 10px;
+}
+
+#profile-page {
+    height: 90%;
+}
+
+#account-page h2 {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 18px;
+}
+
+#account-page p {
+    margin: 0px;
+    text-align: center;
+    font-size: 10px;
+    margin-top: 10px;
+}
+
+#account-page input {
+    margin-left:10px;
+    margin-right: 10px;
+}
+
+.button-wrap {
+    display:flex;
+    justify-content:center;
+}
+
+#checkbox-container, #contacted-list {
+    height: 150px;
+    overflow: scroll;
+    overflow-x:hidden;
+    margin-right: 10px;
+}
+
+#contacted-list {
+    height: 280px;
+    margin-top: 10px;
+}
+
+.lists, #saved-search-button-select-all {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    margin-left: 70px;
+}
+
+#ex {
+    color: darkslateblue;
+    margin-bottom: 10px;
+}
+
+.checkbox {
+    height: 20px;
+    width: 20px;
+}
+
+.checkbox-container {
+    margin-top: 10px;
+}
+
+#saved-search-button-select-all {
+    margin-top:20px
+}
+
+.scroll-box {
+    border-style: inset;
+    margin-left: 30px;
+    border-radius: 1rem;
+}
+
+#select-all {
+    height: 20px;
+    width: 20px;
+}
+
+#contacted-list > div {
+    display: flex;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    margin: 10px;
+}
+
+#contacted-list > div > img {
+    width: 120px;
+}
+
+#contacted-list > div > div {
+    width: 100%;
+}
+
+#contacted-list > div > div > h2 {
+    text-align: center;
+    width: 100%;
+    margin-top: 7px;
+ }
+
+ 
