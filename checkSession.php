@@ -1,13 +1,15 @@
 <?php
+    session_start();
      $output = array();
      header("content-type: application/json");
-     if (isset($_SESSION["userid"])) { //($_SESSION["useruid"] != null) {
+     if (isset($_SESSION["useruid"])) { 
         $output["True"] = "There is a session";
         $output["userid"] = $_SESSION["userid"];
         $output["useruid"] = $_SESSION["useruid"];
         $output["useremail"] = $_SESSION["useremail"];
      } else {
         $output["False"] = "There is no existing session";
+        die(json_encode($output));
      }
      print(json_encode($output));
 

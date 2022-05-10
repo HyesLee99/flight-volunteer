@@ -37,6 +37,9 @@
                 $item["airline"] = $row["dogs_airline"];
                 $item["comment"] = $row["dogs_info"];
                 $item["photo"] = $row["dogs_photo"];
+                $item["orgName"] = $row["org_name"];
+                $item["orgEmail"] = $row["org_email"];
+                $item["shortIntro"] = $row["short_intro"];
                 array_push($output, $item);
                 break;
             }

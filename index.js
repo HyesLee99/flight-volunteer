@@ -96,17 +96,19 @@ const header = document.querySelector('.header.container');
         $("update-profile").addEventListener("click", updateProfile);
         
         // fill out my account page 
-        getInfoForMyAccountPage()
+        fillSavedSearchAndContactedList();
     }
     
-    // Get saved search and contacted list of user (if logged in) and parse them on the 
+    // Get saved search and contacted lists of user (if logged in) and parse them on the 
     // my account page
-    function getInfoForMyAccountPage() {
-       let url = "getInfo.php";
+    function fillSavedSearchAndContactedList() {
+        checkLoggedIn("False");
+        let url = "getInfo.php";
        fetch(url)
             .then(checkStatus)
             .then(JSON.parse)
             .then(data => {
+                // keep throwing error
                 fillSavedSearch(JSON.parse(data["savedsearch"]));
                 fillContactedPage(JSON.parse(data["contacted"]));
             })
@@ -194,13 +196,11 @@ const header = document.querySelector('.header.container');
             .catch(console.log);
     }
 
-    // Show the ???????????????????????????????
-    function selectAll () {
-        let myAccountSideBar = qsa("#side-bar div");
-        for (let i = 0; i < myAccountSideBar.length;i++) {
-            myAccountSideBar[i].classList.remove("selected");
-        }
+    // save the search so that user can get alert once there is an 
+    function saveSearch() {
+
     }
+
 
     // Select the given side-bar div and unselect the other side-bar div
     function sideBarSelected(classList) {
@@ -338,7 +338,8 @@ const header = document.querySelector('.header.container');
                 .then(addItem)
                 .catch(console.log());
     }
-// add all the dog list on the page
+
+    // add all the dog list on the page
     // parameter @data: json data of dog lists
     function addItem(data) {
         console.log(data);
@@ -401,6 +402,11 @@ const header = document.querySelector('.header.container');
             destination.classList.add("distination");
             organization.classList.add("organization");
             sendRequest.classList.add("send-request");
+
+            // when sendRequest is clicked! 
+            sendRequest.addEventListener("click", function() {
+                contactOrg(pic + '.jpg',name, dog["destination"].toUpperCase(), dog["orgName"].toUpperCase());
+            });
             
             img.src = "img/" + pic + ".jpg";
             productImg.appendChild(img);
@@ -408,12 +414,15 @@ const header = document.querySelector('.header.container');
             popupCard.appendChild(aTag);
             popupCard.appendChild(productImg);
 
-            h2.innerHTML = "John Doe  <br> <span>15 months neutered male</span>";
+            h2.innerHTML =  name +  "<br> <span>"+ dog["shortIntro"] + "</span>";
+            // save value so it is easy to fetch info when contact button is clicked
+            h2.title = name;
             p2.innerText = info;
-            destination.innerText = "Destination: " + dog["destination"];
-            organization.innerText = "Organization: LifeWithJindo";
+            destination.innerText = "Destination: " + dog["destination"].toUpperCase();
+            destination.title = dog["destination"].toUpperCase();
+            organization.innerText = "Organization: " + dog["orgName"].toUpperCase();
+            organization.title = dog["orgName"].toUpperCase();
             sendRequest.innerText = "Send Request";
-            sendRequest.href = "sent-request"; 
             
             info2.appendChild(h2);
             info2.appendChild(p2);
@@ -429,7 +438,63 @@ const header = document.querySelector('.header.container');
             close.addEventListener("click", function() {
                 popupView.style.display = "none";
             })
+
+
         }    
+    }
+    
+    // Check if there is logged in account, if not send the user to log in page
+    function checkLoggedIn(msg) {
+        let url = "checkSession.php";
+        fetch(url)
+            .then(checkStatus)
+            .then(JSON.parse)
+            .then(data => {
+                if (data.hasOwnProperty("False")) {
+                    if (msg == "") {
+                        alert("Please log in to see the page.");
+                        logInPage();
+                        return false;
+                    }
+                } else {
+                    return true;
+                }
+             })
+             .catch(console.log);
+    }
+
+    // When the user contact organization, send email to the chosen organization. 
+    // Also, save in database and update on my account page that this user contacted organization about the volunteering opportunity.
+    function contactOrg(pic, name, destination, orgName) {
+        if (!checkLoggedIn("")) {
+            return;
+        }
+        
+        // send email to organization
+        // user name, email, flight info, phone number        
+        // save the contacting info to database
+
+        let today = new Date();
+        let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
+        let dict = {"img": pic, "name": name, "destination": destination, "organization": orgName, "contactedDate": date};
+        let arr = [dict];
+        let url = "update.php";
+        let data = new FormData();
+        data.append("contacted",  JSON.stringify(arr));
+        data.append("action", 'add');
+        
+        fetch(url, {method: 'POST', body: data})
+             .then(checkStatus)
+             .then(JSON.parse)
+             .then(data => {
+                 console.log(JSON.parse(data["contacted"]));
+                if (data.hasOwnProperty("Success")) {
+                    alert("Successfullly contacted! \n Thank you for your interest in the volunteering opportunity! \n Organization will send you an email with more information about the volunteering process.")
+                    fillContactedPage(JSON.parse(data["contacted"]));
+                }
+             })
+             .catch(console.log);
     }
 
     // find the last row of the listing page and return the last row div 
@@ -476,7 +541,6 @@ const header = document.querySelector('.header.container');
 
     // Log in to the account and show the my account page
     function loggedIn(data) {
-        console.log(data);
         if (data.hasOwnProperty("Success")) {
             alert(data["Success"]);
             $("id").value = "";

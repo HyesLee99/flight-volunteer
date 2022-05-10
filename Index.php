@@ -267,7 +267,8 @@
 										<span class="organization">
 											Organization: LifeWithJindo
 										</span>
-										<a href="sent-request" class="send-request">Send request</a>
+										<a href="sent-request" 
+										class="send-request">Send request</a>
 								</div>
 							</div>
 						</div>

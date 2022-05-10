@@ -385,7 +385,10 @@ input {
     .popup-card .close-btn {
         z-index:4;
     }
-
+    
+    .send-request {
+        cursor: pointer;
+    }
 
 }
 
@@ -957,5 +960,6 @@ p, ol {
     width: 100%;
     margin-top: 7px;
  }
+
 
  

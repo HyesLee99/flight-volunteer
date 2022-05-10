@@ -59,7 +59,8 @@
         $contacted = $_SESSION["contacted"];
         $target = $_POST["contacted"];
         if (isset($_POST["action"]) && $_POST["action"] == "add") {
-            $contacted = json_encode(array_merge(json_decode($contacted), json_decode($target)));
+            
+            $contacted = json_encode(array_unique( array_merge(json_decode($contacted), json_decode($target)),SORT_REGULAR ));
         } else {
             $contacted = $target;
         }
