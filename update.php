@@ -49,7 +49,7 @@
         if ($_POST["action"] == "remove") {
             $savedSearch = json_encode(array_diff($savedSearch,$target));
         } else {
-            $savedSearch = json_encode(array_merge($savedSearch, $target));
+            $savedSearch = json_encode(array_unique(array_merge($savedSearch, $target), SORT_REGULAR));
         }
     } else {
         $savedSearch = $_SESSION["savedsearch"];

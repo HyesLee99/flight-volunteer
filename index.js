@@ -319,7 +319,7 @@ const header = document.querySelector('.header.container');
         let popUps = qsa(".popup-view");
         eraseAll(popUps);
         if ($("no-dogs") != null) {
-            $("no-dogs").parentElement.removeChild($("no-dogs"));
+            $("no-dogs").parentElement.parentElement.removeChild($("no-dogs").parentElement);
         }
         fetchSearch(from,to,date,airline);
     }
@@ -342,13 +342,32 @@ const header = document.querySelector('.header.container');
     // add all the dog list on the page
     // parameter @data: json data of dog lists
     function addItem(data) {
-        console.log(data);
         if (data.length == 0) {
             let line = document.createElement("h2");
+            let div = document.createElement("div");
             line.innerText = "Unfortunately, we don't have any dogs going to your destination." + 
             "\n You can sign up to get a notification once we have any dogs going to your destination." 
             line.setAttribute("id", "no-dogs");
-            $("lastRow").appendChild(line);
+            div.appendChild(line);
+            $("lastRow").appendChild(div);
+            let getNotify = document.createElement("a");
+            getNotify.innerText = "Get Notify";
+            getNotify.classList.add("button");
+            getNotify.id = "getNotify";
+            div.appendChild(getNotify);
+            let from = $("departure-2").value;
+            from = from.substring(0,1).toUpperCase() + from.substring(1).toLowerCase();
+            let to =  $("to-2").value;
+            to = to.substring(0,1).toUpperCase() + to.substring(1).toLowerCase();
+            let date = $("depart-2").value;
+            let airline = $("airline-2").value;
+            
+            let str = from + "/" + to + "/" + date + "/[" + airline + "]";
+            // some sort of class to getNotify 
+            getNotify.addEventListener("click", function(){ 
+                saveThisSearch(str);
+            });
+
         }
         for (let dog of data) {
             let name = dog["name"];
@@ -438,11 +457,32 @@ const header = document.querySelector('.header.container');
             close.addEventListener("click", function() {
                 popupView.style.display = "none";
             })
-
-
         }    
+
     }
-    
+
+    // Save the search so that user can get notify when there is a dog that satisfies search 
+    function saveThisSearch(line) {
+        if (checkLoggedIn("")) {
+            return;
+        }
+        let arr = [line];
+        let url = "update.php";
+        let data = new FormData();
+        data.append("savedSearch",  JSON.stringify(arr));
+        data.append("action", 'add');
+        fetch(url, {method: 'POST', body: data})
+             .then(checkStatus)
+             .then(JSON.parse)
+             .then(data => {
+                if (data.hasOwnProperty("Success")) {
+                    alert("Successfully saved! \n You can see these searches on My Account page.");
+                    fillSavedSearch(JSON.parse(data["savedsearch"]));
+                }
+             })
+             .catch(console.log);
+    }
+
     // Check if there is logged in account, if not send the user to log in page
     function checkLoggedIn(msg) {
         let url = "checkSession.php";

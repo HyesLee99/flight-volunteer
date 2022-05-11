@@ -690,6 +690,18 @@ p, ol {
     color: red;
     text-align: center;
     padding: 50px;
+    padding-bottom: 25px;
+}
+
+#getNotify {
+    background-color: darkorange;
+    cursor: pointer;
+    margin-top: 0;
+}
+
+#getNotify:hover {
+    background-color:white;
+    color: darkorange;
 }
 /* fix the bug*/
 
